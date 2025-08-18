@@ -42,16 +42,21 @@ def create_brick(x, y, w=64, h=24, hp=1, color=(100, 160, 220)):
     e.add_component(Brick(hit_points=hp, score=100))
     return e
 
-def build_level(rows=5, cols=10, offset_x=32, offset_y=60, h_gap=4, v_gap=4):
+def build_level(rows=5, cols=10, top=100, h_gap=4, v_gap=4, brick_w=64, brick_h=24):
+    """Build a centered grid of bricks."""
+    total_width = cols * brick_w + (cols - 1) * h_gap
+    offset_x = (SCREEN_WIDTH - total_width) / 2
+    offset_y = top
     bricks = []
-    brick_w = 64
-    brick_h = 24
     for r in range(rows):
         for c in range(cols):
             x = offset_x + c * (brick_w + h_gap)
             y = offset_y + r * (brick_h + v_gap)
-            bricks.append(create_brick(x, y, brick_w, brick_h, hp=1 + r//2,
-                                       color=(100 + r*20, 120 + c*5, 180)))
+            bricks.append(create_brick(
+                x, y, brick_w, brick_h,
+                hp=1 + r // 2,
+                color=(100 + r * 20, 120 + c * 5, 180)
+            ))
     return bricks
 
 def main():
@@ -91,7 +96,7 @@ def main():
 
         # recompute score (simple: (initial bricks - remaining)*100)
         remaining_bricks = sum(1 for e in entities if e.get_component(Brick))
-        total_bricks = 50  # rows*cols in build_level default
+        total_bricks = 5 * 10  # keep in sync with build_level defaults
         score = (total_bricks - remaining_bricks) * 100
 
         render_system.update(entities, dt)
