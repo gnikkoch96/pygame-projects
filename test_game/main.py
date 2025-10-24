@@ -53,7 +53,7 @@ def render():
         # generate random number to determine if the square is clickable or not
         random_num: int = random.randint(1, 10)
         square_color: str = good_color
-        if random_num % 3 == 0: square_color = bad_color
+        if random_num % 4 == 0: square_color = bad_color
 
         current_square = (random_x, random_y, square_size, square_size, square_color)
         last_generation_time = current_time
