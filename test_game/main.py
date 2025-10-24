@@ -1,0 +1,72 @@
+import pygame
+from typing import List, Dict, Optional, Tuple, Union
+import random
+
+pygame.init()
+
+# screen settings
+SCREEN_WIDTH: int = 800
+SCREEN_HEIGHT: int = 600
+BACKGROUND_COLOR: str = "#ffffff"
+screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Click the Square!")
+
+# fps limiter
+clock: pygame.time.Clock = pygame.time.Clock()
+FPS: int = 60
+
+# we do this so that we can change when to run or not
+running: bool = True
+
+# rectangle properties
+good_color: str = "#359c50" # can click
+bad_color: str = "#872222" # lose points for clicking
+
+square_generation_delay: int = 2000 # milliseconds (2 seconds)
+last_generation_time: int = 0 # tracks when the last square was generated
+current_square: Optional[Tuple[int, int, int, int, str]] = None
+
+
+def check_input():
+    global running
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+
+def render():
+    global screen, current_square, last_generation_time
+    
+    screen.fill(pygame.Color(BACKGROUND_COLOR))
+
+    current_time = pygame.time.get_ticks()
+    
+    if current_square is None or (current_time - last_generation_time) >= square_generation_delay:
+        # generate new square
+        square_size: int = random.randint(10, 500)
+
+        # generate random position
+        random_x: int = random.randint(0 + int(square_size/2), SCREEN_WIDTH - int(square_size/2))
+        random_y: int = random.randint(0 + int(square_size/2), SCREEN_HEIGHT - int(square_size/2))
+
+        # generate random number to determine if the square is clickable or not
+        random_num: int = random.randint(1, 10)
+        square_color: str = good_color
+        if random_num % 3 == 0: square_color = bad_color
+
+        current_square = (random_x, random_y, square_size, square_size, square_color)
+        last_generation_time = current_time
+
+    if current_square:
+        x, y, w, h, color = current_square
+        pygame.draw.rect(screen, pygame.Color(color), (x, y, w, h))
+    
+    pygame.display.flip()
+
+
+while running:
+    check_input()
+    render()
+
+    clock.tick(FPS)
