@@ -22,7 +22,7 @@ running: bool = True
 good_color: str = "#359c50" # can click
 bad_color: str = "#872222" # lose points for clicking
 
-square_generation_delay: int = 2000 # milliseconds (2 seconds)
+square_generation_delay: int = 1500 # milliseconds 
 last_generation_time: int = 0 # tracks when the last square was generated
 current_square: Optional[Tuple[int, int, int, int, str]] = None
 
@@ -44,11 +44,11 @@ def render():
     
     if current_square is None or (current_time - last_generation_time) >= square_generation_delay:
         # generate new square
-        square_size: int = random.randint(10, 500)
+        square_size: int = random.randint(50, 250)
 
         # generate random position
-        random_x: int = random.randint(0 + int(square_size/2), SCREEN_WIDTH - int(square_size/2))
-        random_y: int = random.randint(0 + int(square_size/2), SCREEN_HEIGHT - int(square_size/2))
+        random_x: int = random.randint(0, SCREEN_WIDTH - square_size)
+        random_y: int = random.randint(0, SCREEN_HEIGHT - square_size)
 
         # generate random number to determine if the square is clickable or not
         random_num: int = random.randint(1, 10)
