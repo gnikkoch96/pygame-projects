@@ -18,6 +18,8 @@ FPS: int = 60
 # we do this so that we can change when to run or not
 running: bool = True
 
+score: int = 0
+
 # rectangle properties
 good_color: str = "#359c50" # can click
 bad_color: str = "#872222" # lose points for clicking
@@ -28,15 +30,26 @@ current_square: Optional[Tuple[int, int, int, int, str]] = None
 
 
 def check_input():
-    global running
+    global running, current_square, score
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if current_square:
+                x, y, w, h, color = current_square
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if x <= mouse_x <= x + w and y <= mouse_y <= y + h:
+                    if color == good_color:
+                        score += 1
+                    else:
+                        score -= 1
+                    # regenerate a new square
+                    current_square = None
 
 
 def render():
-    global screen, current_square, last_generation_time
+    global screen, current_square, last_generation_time, score
     
     screen.fill(pygame.Color(BACKGROUND_COLOR))
 
@@ -61,6 +74,12 @@ def render():
     if current_square:
         x, y, w, h, color = current_square
         pygame.draw.rect(screen, pygame.Color(color), (x, y, w, h))
+
+
+    # render score text
+    font = pygame.font.SysFont(None, 48)
+    text = font.render(f"Score: {score}", True, pygame.Color("#000000"))
+    screen.blit(text, (0, 0))
     
     pygame.display.flip()
 
