@@ -17,7 +17,7 @@ FPS: int = 60
 
 # we do this so that we can change when to run or not
 running: bool = True
-
+font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 score: int = 0
 
 # rectangle properties
@@ -77,7 +77,6 @@ def render():
 
 
     # render score text
-    font = pygame.font.SysFont(None, 48)
     text = font.render(f"Score: {score}", True, pygame.Color("#000000"))
     screen.blit(text, (0, 0))
     
