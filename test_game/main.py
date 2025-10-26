@@ -7,7 +7,7 @@ pygame.init()
 # screen settings
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 600
-TIME_LIMIT = 30000 # milliseconds (30 seconds)
+TIME_LIMIT = 5000 # milliseconds (30 seconds)
 BACKGROUND_COLOR: str = "#ffffff"
 screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Click the Square!")
@@ -18,6 +18,7 @@ FPS: int = 60
 
 # we do this so that we can change when to run or not
 running: bool = True
+game_finished: bool = False
 font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 score: int = 0
 start_time: int = 0
@@ -51,8 +52,13 @@ def check_input():
                     current_square = None
 
 def update():
-    global current_square, last_generation_time, start_time, running, score, remaining_time
+    global current_square, last_generation_time, start_time, running, score, remaining_time, game_finished
     
+    if game_finished:
+        # display dialog
+        print("Time's up! Final Score:", score)
+        return
+
     current_time = pygame.time.get_ticks()
     
     # Square generation logic
@@ -70,8 +76,9 @@ def update():
     elapsed_time = current_time - start_time
     remaining_time = max(0, TIME_LIMIT - elapsed_time)
     if remaining_time <= 0:
-        running = False
-        print("Time's up! Final Score:", score)
+        game_finished = True
+
+
 
 def render():
     global screen, current_square, score, remaining_time
