@@ -69,7 +69,6 @@ def update():
     # Timer logic (if added)
     elapsed_time = current_time - start_time
     remaining_time = max(0, TIME_LIMIT - elapsed_time)
-    print(remaining_time)
     if remaining_time <= 0:
         running = False
         print("Time's up! Final Score:", score)
