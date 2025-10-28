@@ -20,6 +20,7 @@ FPS: int = 60
 running: bool = True
 game_finished: bool = False
 font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 score: int = 0
 start_time: int = 0
 remaining_time: int = 0
@@ -111,11 +112,21 @@ def show_game_over_dialog():
     pygame.draw.rect(screen, pygame.Color("#4CAF50"), (retry_button_x, retry_button_y, button_width, button_height))
     pygame.draw.rect(screen, pygame.Color("#000000"), (retry_button_x, retry_button_y, button_width, button_height), 1)
 
+    # retry button text
+    button_text = button_font.render("Restart", True, pygame.Color('#ffffff'))
+    button_text_rect = button_text.get_rect(center=(retry_button_x + button_width // 2, retry_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
     # exit button
     exit_button_x = dialog_x + (dialog_width - button_width) // 2 + 75
     exit_button_y = dialog_y + dialog_height - button_height - 20
     pygame.draw.rect(screen, pygame.Color("#AF594C"), (exit_button_x, exit_button_y, button_width, button_height))
     pygame.draw.rect(screen, pygame.Color("#000000"), (exit_button_x, exit_button_y, button_width, button_height), 1)
+
+    # exit button text
+    button_text = button_font.render("Exit", True, pygame.Color("#ffffff"))
+    button_text_rect = button_text.get_rect(center=(exit_button_x + button_width // 2, exit_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
 
     pygame.display.flip()
 
