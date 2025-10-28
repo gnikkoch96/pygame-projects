@@ -137,7 +137,17 @@ def show_game_over_dialog():
                 pygame.quit()
                 exit()
             elif event.type in (pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN):
-                waiting = False
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # clicked on retry button
+                if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
+                    print('Clicked Retry')
+            
+                # clicked on exit button
+                elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
+                    print("Clicked Exit")
+                    
+
 
 def render():
     global screen, current_square, score, remaining_time
