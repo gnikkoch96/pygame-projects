@@ -81,6 +81,7 @@ def update():
         game_finished = True
 
 def show_game_over_dialog():
+    global score, start_time, remaining_time, game_finished, current_square, last_generation_time, running
     overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     overlay.set_alpha(128)
     overlay.fill((0, 0, 0))
@@ -141,11 +142,19 @@ def show_game_over_dialog():
 
                 # clicked on retry button
                 if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
-                    print('Clicked Retry')
+                    score = 0
+                    start_time = pygame.time.get_ticks()
+                    remaining_time = TIME_LIMIT
+                    game_finished = False
+                    current_square = None
+                    last_generation_time = 0
+                    waiting = False # close dialog
             
                 # clicked on exit button
                 elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
-                    print("Clicked Exit")
+                    waiting = False
+                    running = False
+
                     
 
 
