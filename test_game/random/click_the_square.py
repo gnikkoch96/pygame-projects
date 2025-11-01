@@ -179,7 +179,7 @@ def render():
 
 
 while running:
-    check_input()
     update()  # Call logic first
+    check_input()
     render()  # Then render
     clock.tick(FPS)
