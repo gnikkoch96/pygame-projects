@@ -82,6 +82,7 @@ def update():
                 'x': money[0],
                 'y': money[1],
                 'alpha': 255,
+                'text_color': MONEY_COLOR,
                 'timer': 180 # 3 seconds at 60FPS
             })
 
@@ -137,7 +138,7 @@ def render():
 
     # render animations
     for anim in animations:
-        text_surf = font.render(anim['text'], True, pygame.Color("#000000"))
+        text_surf = font.render(anim['text'], True, pygame.Color(anim['text_color']))
         text_surf.set_alpha(anim['alpha'])
         screen.blit(text_surf, (anim['x'], anim['y']))
 
