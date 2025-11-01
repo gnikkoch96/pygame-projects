@@ -40,7 +40,7 @@ ROCK_LIST: List[List[Union[int, str]]] = []
 # game logic
 TIME_LIMIT: int = 30000
 running: bool = True
-game_running: bool = True
+game_finished: bool = True
 frame_count = 0
 score: int = 0
 start_time: int = 0
@@ -53,7 +53,7 @@ font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 text_animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
-    global frame_count, score, game_running
+    global frame_count, score, game_finished
 
     # spawn new money
     frame_count += 1
@@ -130,7 +130,7 @@ def update():
     remaining_time = max(0, TIME_LIMIT - elapsed_time)
 
     if remaining_time <= 0:
-        game_running = False
+        game_finished = False
 
     
 
