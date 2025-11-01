@@ -38,8 +38,10 @@ money_list: List[List[Union[int, str]]] = []
 SPAWN_RATE: int = 120
 frame_count = 0
 
+score: int = 0
+
 def update():
-    global frame_count
+    global frame_count, score
 
     # spawn new money
     frame_count += 1
@@ -54,6 +56,9 @@ def update():
 
         money_rect = pygame.Rect(money[0], money[1], money[2], money[3])
         if bucket_rect.colliderect(money_rect):
+            # update score
+            score += random.randint(10, 100)
+
             money_list.remove(money)
         elif money[1] > SCREEN_HEIGHT:
             money_list.remove(money)
@@ -84,6 +89,10 @@ def render():
 
     # render bucket
     pygame.draw.rect(screen, pygame.Color(bucket[4]), bucket[:4])
+
+
+    text = font.render(f"Money: ${score}", True, pygame.Color("#000000"))
+    screen.blit(text, (0, 0))
 
     pygame.display.flip()
 
