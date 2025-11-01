@@ -45,8 +45,10 @@ ROCK_SPAWN_RATE: int = 500
 ROCK_LIST: List[List[Union[int, str]]] = []
 
 frame_count = 0
-
 score: int = 0
+
+# list of {'text': str, 'x': int, 'y': int, 'alpha': int, 'timer': int}
+animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
     global frame_count, score
@@ -71,7 +73,17 @@ def update():
         money_rect = pygame.Rect(money[0], money[1], money[2], money[3])
         if bucket_rect.colliderect(money_rect):
             # update score
-            score += random.randint(10, 50)
+            earned = random.randint(10, 50)
+            score += earned
+
+            # add animation earned
+            animations.append({
+                'text': f"+{earned}",
+                'x': money[0],
+                'y': money[1],
+                'alpha': 255,
+                'timer': 180 # 3 seconds at 60FPS
+            })
 
             MONEY_LIST.remove(money)
         elif money[1] > SCREEN_HEIGHT:
@@ -123,6 +135,11 @@ def render():
     # render bucket
     pygame.draw.rect(screen, pygame.Color(bucket[4]), bucket[:4])
 
+    # render animations
+    for anim in animations:
+        text_surf = font.render(anim['text'], True, pygame.Color("#000000"))
+        text_surf.set_alpha(anim['alpha'])
+        screen.blit(text_surf, (anim['x'], anim['y']))
 
     text = font.render(f"Money: ${score}", True, pygame.Color("#000000"))
     screen.blit(text, (0, 0))
