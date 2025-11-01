@@ -95,7 +95,7 @@ def update():
         rock[1] += ROCK_FALL_SPEED
 
         rock_rect = pygame.Rect(rock[0], rock[1], rock[2], rock[3])
-        if bucket_rect.colliderect(rock_rect):
+        if bucket_rect.colliderect(rock_rect) and score > 0:
             # play lost animation
             animations.append({
                 'text': f"-{score}",
