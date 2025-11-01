@@ -7,7 +7,6 @@ pygame.init()
 # screen settings
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 600
-TIME_LIMIT: int = 30000
 BACKGROUND_COLOR: str = '#ffffff'
 screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Collect the Money')
@@ -15,12 +14,6 @@ pygame.display.set_caption('Collect the Money')
 # fps limiter
 clock: pygame.time.Clock = pygame.time.Clock()
 FPS: int = 60 # 60 fps target 
-
-# game flags
-running: bool = True
-
-# ui objs
-font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 
 # bucket
 BUCKET_HEIGHT: int = 50
@@ -31,7 +24,7 @@ bucket_x: int  = SCREEN_WIDTH // 2 - BUCKET_WIDTH //2
 bucket: List[Union[int, str]] = [bucket_x, bucket_y, BUCKET_WIDTH, BUCKET_HEIGHT, BUCKET_COLOR]
 
 # money
-MONEY_SIZE: List[int] = [50, 50]
+MONEY_SIZE: List[int] = [50, 15]
 MONEY_COLOR: str = "#21CE3B"
 MONEY_FALL_SPEED: int = 3
 MONEY_LIST: List[List[Union[int, str]]] = []
@@ -44,11 +37,19 @@ ROCK_FALL_SPEED: int = 10
 ROCK_SPAWN_RATE: int = 300
 ROCK_LIST: List[List[Union[int, str]]] = []
 
+# game logic
+TIME_LIMIT: int = 30000
+running: bool = True
 frame_count = 0
 score: int = 0
+start_time: int = 0
+remaining_time: int = 0
+
+# ui objs
+font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 
 # list of {'text': str, 'x': int, 'y': int, 'alpha': int, 'timer': int}
-animations: List[Dict[str, Union[str, int]]] = [] 
+text_animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
     global frame_count, score
@@ -77,7 +78,7 @@ def update():
             score += earned
 
             # add animation earned
-            animations.append({
+            text_animations.append({
                 'text': f"+{earned}",
                 'x': money[0],
                 'y': money[1],
@@ -97,7 +98,7 @@ def update():
         rock_rect = pygame.Rect(rock[0], rock[1], rock[2], rock[3])
         if bucket_rect.colliderect(rock_rect) and score > 0:
             # play lost animation
-            animations.append({
+            text_animations.append({
                 'text': f"-{score}",
                 'x': font.size('Money:')[0],
                 'y': 30,
@@ -114,13 +115,18 @@ def update():
             ROCK_LIST.remove(rock)
 
     # update animations
-    for anim in animations[:]:
+    for anim in text_animations[:]:
         anim['timer'] -= 1
         anim['alpha'] = max(0, int(255 * (anim['timer'] / 180)))
         anim['y'] -= 1 
 
         if anim['timer'] <= 0:
-            animations.remove(anim)
+            text_animations.remove(anim)
+
+    # update time
+    current_time = pygame.time.get_ticks()
+    elapsed_time = current_time - start_time
+    remaining_time = max(0, TIME_LIMIT - elapsed_time)
 
     
 
@@ -154,7 +160,7 @@ def render():
     pygame.draw.rect(screen, pygame.Color(bucket[4]), bucket[:4])
 
     # render animations
-    for anim in animations:
+    for anim in text_animations:
         text_surf = font.render(anim['text'], True, pygame.Color(anim['text_color']))
         text_surf.set_alpha(anim['alpha'])
         screen.blit(text_surf, (anim['x'], anim['y']))
