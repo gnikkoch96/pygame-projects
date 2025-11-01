@@ -53,7 +53,7 @@ font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 text_animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
-    global frame_count, score, game_finished
+    global frame_count, score, game_finished, remaining_time
 
     # spawn new money
     frame_count += 1
@@ -169,8 +169,12 @@ def render():
         text_surf.set_alpha(anim['alpha'])
         screen.blit(text_surf, (anim['x'], anim['y']))
 
-    text = font.render(f"Money: ${score}", True, pygame.Color("#000000"))
-    screen.blit(text, (0, 0))
+    # hud
+    money_label = font.render(f"Money: ${score}", True, pygame.Color("#000000"))
+    screen.blit(money_label, (0, 0))
+
+    timer_label = font.render(f"Time: {remaining_time // 1000}s", True, pygame.Color("#000000"))
+    screen.blit(timer_label, (SCREEN_WIDTH - 160, 0))
 
     pygame.display.flip()
 
