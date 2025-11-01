@@ -41,7 +41,7 @@ MONEY_SPAWN_RATE: int = 120
 ROCK_SIZE: List[int] = [30, 30]
 ROCK_COLOR: str = "#90614c"
 ROCK_FALL_SPEED: int = 10
-ROCK_SPAWN_RATE: int = 500
+ROCK_SPAWN_RATE: int = 300
 ROCK_LIST: List[List[Union[int, str]]] = []
 
 frame_count = 0
@@ -97,7 +97,15 @@ def update():
         rock_rect = pygame.Rect(rock[0], rock[1], rock[2], rock[3])
         if bucket_rect.colliderect(rock_rect):
             # play lost animation
-
+            animations.append({
+                'text': f"-{score}",
+                'x': font.size('Money:')[0],
+                'y': 30,
+                'alpha': 255,
+                'text_color': ROCK_COLOR,
+                'timer': 180
+            })  
+        
             # reset score
             score = 0
 
@@ -109,7 +117,7 @@ def update():
     for anim in animations[:]:
         anim['timer'] -= 1
         anim['alpha'] = max(0, int(255 * (anim['timer'] / 180)))
-        anim['y'] -= 1
+        anim['y'] -= 1 
 
         if anim['timer'] <= 0:
             animations.remove(anim)
