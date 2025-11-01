@@ -47,11 +47,15 @@ def update():
         rand_x = random.randint(0, SCREEN_WIDTH - MONEY_SIZE[0])
         money_list.append([rand_x, 0, MONEY_SIZE[0], MONEY_SIZE[1], MONEY_COLOR])
 
-    # update money position
+    # update money position and check for collisions
+    bucket_rect = pygame.Rect(bucket[0], bucket[1], bucket[2], bucket[3])
     for money in money_list[:]: # slice to allow removal of items
         money[1] += FALL_SPEED
 
-        if money[1] > SCREEN_HEIGHT:
+        money_rect = pygame.Rect(money[0], money[1], money[2], money[3])
+        if bucket_rect.colliderect(money_rect):
+            money_list.remove(money)
+        elif money[1] > SCREEN_HEIGHT:
             money_list.remove(money)
 
     
