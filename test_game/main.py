@@ -105,6 +105,15 @@ def update():
         elif rock[1] > SCREEN_HEIGHT:
             ROCK_LIST.remove(rock)
 
+    # update animations
+    for anim in animations[:]:
+        anim['timer'] -= 1
+        anim['alpha'] = max(0, int(255 * (anim['timer'] / 180)))
+        anim['y'] -= 1
+
+        if anim['timer'] <= 0:
+            animations.remove(anim)
+
     
 
 def check_input():
