@@ -255,6 +255,9 @@ def show_game_over_dialog():
                     remaining_time = TIME_LIMIT
                     game_finished = False
                     last_generation_time = 0
+                    MONEY_LIST.clear()
+                    ROCK_LIST.clear()
+                    text_animations.clear()
                     waiting = False # close dialog
             
                 # clicked on exit button
