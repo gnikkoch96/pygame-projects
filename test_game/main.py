@@ -43,7 +43,6 @@ ROCK_LIST: List[List[Union[int, str]]] = []
 # game logic
 TIME_LIMIT: int = 30000
 running: bool = True
-game_finished: bool = True
 frame_count = 0
 score: int = 0
 start_time: int = 0
@@ -51,12 +50,13 @@ remaining_time: int = TIME_LIMIT
 
 # ui objs
 font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 
 # list of {'text': str, 'x': int, 'y': int, 'alpha': int, 'timer': int}
 text_animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
-    global frame_count, score, game_finished, remaining_time, money_fall_speed, money_spawn_rate
+    global frame_count, score, remaining_time, money_fall_speed, money_spawn_rate
 
     # update time
     current_time = pygame.time.get_ticks()
@@ -66,7 +66,7 @@ def update():
     # calculate progress (0 at start, 1 at end)
     progress = (TIME_LIMIT - remaining_time) / TIME_LIMIT if TIME_LIMIT > 0 else 1
 
-    # interpolate fall speed and spawn rate
+    # interpolate fall speed and spawn rate (linear increase)
     current_money_fall_speed = int(MONEY_FALL_SPEED_MIN + progress * (MONEY_FALL_SPEED_MAX - MONEY_FALL_SPEED_MIN))
 
     current_money_spawn_rate = max(1, int(MONEY_SPAWN_RATE_MAX - progress * (MONEY_SPAWN_RATE_MAX - MONEY_SPAWN_RATE_MIN)))
@@ -189,8 +189,87 @@ def render():
 
     pygame.display.flip()
 
+def show_game_over_dialog():
+    global score, start_time, remaining_time, game_finished, last_generation_time, running
+    overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+    overlay.set_alpha(128)
+    overlay.fill((0, 0, 0))
+    screen.blit(overlay, (0, 0))
+
+    # dialog box
+    dialog_width, dialog_height = 400, 250
+    dialog_x = (SCREEN_WIDTH - dialog_width) // 2
+    dialog_y = (SCREEN_HEIGHT - dialog_height) // 2
+
+    # main dialog box
+    pygame.draw.rect(screen, pygame.Color("#ffffff"), (dialog_x, dialog_y, dialog_width, dialog_height))
+
+    # border color
+    pygame.draw.rect(screen, pygame.Color('#000000'), (dialog_x, dialog_y, dialog_width, dialog_height), 2)
+
+    message = f"Your Final Score: {score}"
+    text = font.render(message, True, pygame.Color("#000000"))
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    screen.blit(text, text_rect)
+
+    # buttons
+    button_width, button_height = 100, 50
+
+    # retry button
+    retry_button_x = dialog_x + (dialog_width - button_width) // 2 - 75
+    retry_button_y = dialog_y + dialog_height - button_height - 20
+    pygame.draw.rect(screen, pygame.Color("#4CAF50"), (retry_button_x, retry_button_y, button_width, button_height))
+    pygame.draw.rect(screen, pygame.Color("#000000"), (retry_button_x, retry_button_y, button_width, button_height), 1)
+
+    # retry button text
+    button_text = button_font.render("Restart", True, pygame.Color('#ffffff'))
+    button_text_rect = button_text.get_rect(center=(retry_button_x + button_width // 2, retry_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
+    # exit button
+    exit_button_x = dialog_x + (dialog_width - button_width) // 2 + 75
+    exit_button_y = dialog_y + dialog_height - button_height - 20
+    pygame.draw.rect(screen, pygame.Color("#AF594C"), (exit_button_x, exit_button_y, button_width, button_height))
+    pygame.draw.rect(screen, pygame.Color("#000000"), (exit_button_x, exit_button_y, button_width, button_height), 1)
+
+    # exit button text
+    button_text = button_font.render("Exit", True, pygame.Color("#ffffff"))
+    button_text_rect = button_text.get_rect(center=(exit_button_x + button_width // 2, exit_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
+    pygame.display.flip()
+
+    waiting = True
+    while waiting: 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type in (pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN):
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # clicked on retry button
+                if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
+                    score = 0
+                    start_time = pygame.time.get_ticks()
+                    remaining_time = TIME_LIMIT
+                    game_finished = False
+                    last_generation_time = 0
+                    waiting = False # close dialog
+            
+                # clicked on exit button
+                elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
+                    waiting = False
+                    running = False
+
 while running: 
-    update()
-    check_input()
-    render()
+    if remaining_time > 0:
+        update()
+        check_input()
+        render()
+    else:
+        show_game_over_dialog()
+
     clock.tick(FPS)
+
+
