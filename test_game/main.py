@@ -36,7 +36,7 @@ MONEY_SPAWN_RATE_MAX: int = 120
 ROCK_SIZE: List[int] = [30, 30]
 ROCK_COLOR: str = "#90614c"
 ROCK_FALL_SPEED: int = 10
-ROCK_SPAWN_RATE_MIN: int = 150
+ROCK_SPAWN_RATE_MIN: int = 120
 ROCK_SPAWN_RATE_MAX: int = 300
 ROCK_LIST: List[List[Union[int, str]]] = []
 
