@@ -43,7 +43,7 @@ ROCK_LIST: List[List[Union[int, str]]] = []
 # game logic
 TIME_LIMIT: int = 30000
 running: bool = True
-frame_count = 0
+frame_count: int = 0
 score: int = 0
 start_time: int = 0
 remaining_time: int = TIME_LIMIT
@@ -190,7 +190,7 @@ def render():
     pygame.display.flip()
 
 def show_game_over_dialog():
-    global score, start_time, remaining_time, game_finished, last_generation_time, running
+    global score, start_time, remaining_time, game_finished, last_generation_time, running, frame_count
     overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     overlay.set_alpha(128)
     overlay.fill((0, 0, 0))
@@ -253,11 +253,11 @@ def show_game_over_dialog():
                     score = 0
                     start_time = pygame.time.get_ticks()
                     remaining_time = TIME_LIMIT
-                    game_finished = False
                     last_generation_time = 0
                     MONEY_LIST.clear()
                     ROCK_LIST.clear()
                     text_animations.clear()
+                    frame_count = 0
                     waiting = False # close dialog
             
                 # clicked on exit button
