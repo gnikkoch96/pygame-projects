@@ -26,15 +26,18 @@ bucket: List[Union[int, str]] = [bucket_x, bucket_y, BUCKET_WIDTH, BUCKET_HEIGHT
 # money
 MONEY_SIZE: List[int] = [50, 15]
 MONEY_COLOR: str = "#21CE3B"
-MONEY_FALL_SPEED: int = 3
 MONEY_LIST: List[List[Union[int, str]]] = []
-MONEY_SPAWN_RATE: int = 120
+MONEY_FALL_SPEED_MIN: int = 3
+MONEY_FALL_SPEED_MAX: int = 6
+MONEY_SPAWN_RATE_MIN: int = 30 # per 60 FPS
+MONEY_SPAWN_RATE_MAX: int = 120
 
 # rock
 ROCK_SIZE: List[int] = [30, 30]
 ROCK_COLOR: str = "#90614c"
 ROCK_FALL_SPEED: int = 10
-ROCK_SPAWN_RATE: int = 300
+ROCK_SPAWN_RATE_MIN: int = 150
+ROCK_SPAWN_RATE_MAX: int = 300
 ROCK_LIST: List[List[Union[int, str]]] = []
 
 # game logic
@@ -44,7 +47,7 @@ game_finished: bool = True
 frame_count = 0
 score: int = 0
 start_time: int = 0
-remaining_time: int = 0
+remaining_time: int = TIME_LIMIT
 
 # ui objs
 font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
@@ -53,16 +56,31 @@ font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 text_animations: List[Dict[str, Union[str, int]]] = [] 
 
 def update():
-    global frame_count, score, game_finished, remaining_time
+    global frame_count, score, game_finished, remaining_time, money_fall_speed, money_spawn_rate
+
+    # update time
+    current_time = pygame.time.get_ticks()
+    elapsed_time = current_time - start_time
+    remaining_time = max(0, TIME_LIMIT - elapsed_time)
+
+    # calculate progress (0 at start, 1 at end)
+    progress = (TIME_LIMIT - remaining_time) / TIME_LIMIT if TIME_LIMIT > 0 else 1
+
+    # interpolate fall speed and spawn rate
+    current_money_fall_speed = int(MONEY_FALL_SPEED_MIN + progress * (MONEY_FALL_SPEED_MAX - MONEY_FALL_SPEED_MIN))
+
+    current_money_spawn_rate = max(1, int(MONEY_SPAWN_RATE_MAX - progress * (MONEY_SPAWN_RATE_MAX - MONEY_SPAWN_RATE_MIN)))
+
+    current_rock_spawn_rate = max(1, int(ROCK_SPAWN_RATE_MAX - progress * (ROCK_SPAWN_RATE_MAX - ROCK_SPAWN_RATE_MIN)))
 
     # spawn new money
     frame_count += 1
-    if frame_count % MONEY_SPAWN_RATE == 0:
+    if frame_count % current_money_spawn_rate == 0:
         rand_x = random.randint(0, SCREEN_WIDTH - MONEY_SIZE[0])
         MONEY_LIST.append([rand_x, 0, MONEY_SIZE[0], MONEY_SIZE[1], MONEY_COLOR])
 
     # spawn rock
-    if frame_count % ROCK_SPAWN_RATE == 0:
+    if frame_count % current_rock_spawn_rate == 0:
         rand_x = random.randint(0, SCREEN_WIDTH - MONEY_SIZE[0])
         ROCK_LIST.append([rand_x, 0, ROCK_SIZE[0], ROCK_SIZE[1], ROCK_COLOR])
 
@@ -70,7 +88,7 @@ def update():
     bucket_rect = pygame.Rect(bucket[0], bucket[1], bucket[2], bucket[3])
     
     for money in MONEY_LIST[:]: # slice to allow removal of items
-        money[1] += MONEY_FALL_SPEED
+        money[1] += current_money_fall_speed
 
         money_rect = pygame.Rect(money[0], money[1], money[2], money[3])
         if bucket_rect.colliderect(money_rect):
@@ -124,13 +142,6 @@ def update():
         if anim['timer'] <= 0:
             text_animations.remove(anim)
 
-    # update time
-    current_time = pygame.time.get_ticks()
-    elapsed_time = current_time - start_time
-    remaining_time = max(0, TIME_LIMIT - elapsed_time)
-
-    if remaining_time <= 0:
-        game_finished = False
 
     
 
