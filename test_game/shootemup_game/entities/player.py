@@ -15,3 +15,6 @@ class Player:
     
     def update(self):
         pass
+
+    def render(self, screen: pygame.Surface):
+        pygame.draw.rect(screen, self.color, self.rect)
