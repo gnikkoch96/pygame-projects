@@ -25,13 +25,16 @@ def check_input():
         if event.type == pygame.QUIT:
             running = False
 
+    keys = pygame.key.get_pressed()
+    player.handle_input(keys)
+
 def update():
     player.update()
 
 def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
-    
+
     pygame.display.flip()
 
 while running:

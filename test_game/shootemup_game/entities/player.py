@@ -1,4 +1,5 @@
 import pygame
+from config import SCREEN_WIDTH
 
 class Player: 
     def __init__(self, x: int, y: int, speed: int = 5):
@@ -11,8 +12,13 @@ class Player:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def handle_input(self, keys):
-        print(keys)
-    
+        if keys[pygame.K_LEFT]:
+            self.x -= 5
+
+        if keys[pygame.K_RIGHT]:
+            self.x += 5
+        
+
     def update(self):
         pass
 
