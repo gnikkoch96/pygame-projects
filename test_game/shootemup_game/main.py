@@ -31,6 +31,7 @@ def update():
 def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
+    
     pygame.display.flip()
 
 while running:

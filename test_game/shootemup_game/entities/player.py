@@ -18,3 +18,22 @@ class Player:
 
     def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.color, self.rect)
+
+        # left wing
+        pygame.draw.polygon(screen, 
+                            self.color,
+                            [
+                                (self.x, self.y),
+                                (self.x - 25, self.y + self.height),
+                                (self.x, self.y + self.height)
+                            ],
+                            width=2)
+        # right wing
+        pygame.draw.polygon(screen, 
+                            self.color,
+                            [
+                                (self.x + self.width, self.y),
+                                (self.x + self.width + 25, self.y + self.height),
+                                (self.x + self.width, self.y + self.height)
+                            ],
+                            width=2)
