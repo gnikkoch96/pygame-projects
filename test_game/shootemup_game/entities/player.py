@@ -15,7 +15,7 @@ class Player:
         if keys[pygame.K_LEFT] and self.x - 27 >= 0:
             self.x -= 5
 
-        if keys[pygame.K_RIGHT] and self.x + self.width + 27 <= SCREEN_WIDTH:
+        if keys[pygame.K_RIGHT] and self.x + self.width + 2 <= SCREEN_WIDTH:
             self.x += 5
         
 
