@@ -1,5 +1,7 @@
 import pygame
 from config import SCREEN_WIDTH
+from entities.bullet import Bullet
+from typing import List
 
 class Player: 
     def __init__(self, x: int, y: int, speed: int = 5):
@@ -10,6 +12,7 @@ class Player:
         self.height = 50
         self.color = pygame.Color("#ffffff")
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.bullets: List[Bullet] = []
 
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] and self.x - 27 >= 0:
@@ -17,12 +20,22 @@ class Player:
 
         if keys[pygame.K_RIGHT] and self.x + self.width + 2 <= SCREEN_WIDTH:
             self.x += self.speed
+
+        if keys[pygame.K_SPACE]:
+            self.bullets.append(Bullet(self.x + self.width // 2 - 2, self.y - 25))
+
         
 
     def update(self):
-        pass
+        for bullet in self.bullets:
+            bullet.update()
 
     def render(self, screen: pygame.Surface):
+        # bullets
+        for bullet in self.bullets:
+            bullet.render(screen)
+
+
         # left wing
         pygame.draw.polygon(screen, 
                             self.color,
@@ -42,7 +55,17 @@ class Player:
                             ],
                             width=2)
 
-        # body
+        # top body
+        pygame.draw.polygon(screen, 
+            self.color,
+            [
+                (self.x, self.y),
+                (self.x + self.width, self.y),
+                (self.x + self.width // 2, self.y - 25)
+            ],
+            width=2)
+        
+        # bottom body
         pygame.draw.polygon(screen, 
                     self.color,
                     [
@@ -52,11 +75,5 @@ class Player:
                     ],
                     width=2)
         
-        pygame.draw.polygon(screen, 
-            self.color,
-            [
-                (self.x, self.y),
-                (self.x + self.width, self.y),
-                (self.x + self.width // 2, self.y - 25)
-            ],
-            width=2)
+
+        
