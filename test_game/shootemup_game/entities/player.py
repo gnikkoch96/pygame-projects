@@ -13,10 +13,10 @@ class Player:
 
     def handle_input(self, keys):
         if keys[pygame.K_LEFT] and self.x - 27 >= 0:
-            self.x -= 5
+            self.x -= self.speed
 
         if keys[pygame.K_RIGHT] and self.x + self.width + 2 <= SCREEN_WIDTH:
-            self.x += 5
+            self.x += self.speed
         
 
     def update(self):
