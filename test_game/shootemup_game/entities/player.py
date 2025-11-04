@@ -30,6 +30,18 @@ class Player:
         for bullet in self.bullets:
             bullet.update()
 
+        # print(f"Bullets before cleanup: {len(self.bullets)}")  # Debug: Count before
+
+        # clean up dead bullets
+        alive_bullets_left = []
+        for bullet in self.bullets:
+            if bullet.is_alive:
+                alive_bullets_left.append(bullet)
+
+        self.bullets = alive_bullets_left
+
+        # print(f"Bullets after cleanup: {len(self.bullets)}")  # Debug: Count after
+
     def render(self, screen: pygame.Surface):
         # bullets
         for bullet in self.bullets:
@@ -74,6 +86,6 @@ class Player:
                         (self.x + self.width // 2, self.y + 25)
                     ],
                     width=2)
-        
 
-        
+
+
