@@ -12,10 +12,10 @@ class Player:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def handle_input(self, keys):
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.x - 27 >= 0:
             self.x -= 5
 
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.x + self.width + 27 <= SCREEN_WIDTH:
             self.x += 5
         
 
