@@ -11,7 +11,6 @@ class Player:
         self.width = 50
         self.height = 50
         self.color = pygame.Color("#ffffff")
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.bullets: List[Bullet] = []
         self.last_shot_time = 0
         self.shot_cooldown = 200
