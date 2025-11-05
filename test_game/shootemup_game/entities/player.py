@@ -22,7 +22,7 @@ class Player:
             self.x += self.speed
 
         if keys[pygame.K_SPACE]:
-            self.bullets.append(Bullet(self.x + self.width // 2 - 2, self.y - 25))
+            self.bullets.append(Bullet(self.x + self.width // 2 - 2, self.y - 25, 2, 1))
 
         
 
