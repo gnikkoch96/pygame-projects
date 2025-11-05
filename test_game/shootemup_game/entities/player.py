@@ -13,16 +13,21 @@ class Player:
         self.color = pygame.Color("#ffffff")
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.bullets: List[Bullet] = []
+        self.last_shot_time = 0
+        self.shot_cooldown = 200
 
     def handle_input(self, keys):
+        current_time = pygame.time.get_ticks()
+
         if keys[pygame.K_LEFT] and self.x - 27 >= 0:
             self.x -= self.speed
 
         if keys[pygame.K_RIGHT] and self.x + self.width + 2 <= SCREEN_WIDTH:
             self.x += self.speed
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
             self.bullets.append(Bullet(self.x + self.width // 2 - 2, self.y - 25, 2, 1))
+            self.last_shot_time = current_time
 
         
 
