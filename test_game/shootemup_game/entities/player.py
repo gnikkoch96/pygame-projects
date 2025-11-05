@@ -22,7 +22,7 @@ class Player:
         if keys[pygame.K_LEFT] and self.x - 27 >= 0:
             self.x -= self.speed
 
-        if keys[pygame.K_RIGHT] and self.x + self.width + 2 <= SCREEN_WIDTH:
+        if keys[pygame.K_RIGHT] and self.x + self.width + 27 <= SCREEN_WIDTH:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
