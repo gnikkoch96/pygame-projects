@@ -19,10 +19,10 @@ class Player:
     def handle_input(self, keys):
         current_time = pygame.time.get_ticks()
 
-        if keys[pygame.K_LEFT] and self.x - 27 >= 0:
+        if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x - 27 >= 0:
             self.x -= self.speed
 
-        if keys[pygame.K_RIGHT] and self.x + self.width + 27 <= SCREEN_WIDTH:
+        if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.x + self.width + 27 <= SCREEN_WIDTH:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
