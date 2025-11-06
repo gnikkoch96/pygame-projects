@@ -19,6 +19,7 @@ class Enemy:
         self.current_target_index = 0 
         self.last_shot_time = 0
         self.shot_cooldown = shot_cooldown
+        self.is_alive: bool = True
 
         # color changes based on hp value
         if hp > 1:

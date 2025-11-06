@@ -4,6 +4,7 @@ from typing import List, Dict, Optional, Tuple, Union
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS
 from entities.player import Player
 from entities.enemy import Enemy
+from entities.meteor import Meteor
 
 pygame.init()
 
@@ -18,7 +19,8 @@ running: bool = True
 
 # game objs
 player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 100)
-enemy = Enemy(100, 100, 1, [])
+enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
+meteor = Meteor(100, 100)
 
 def check_input():
     global running
@@ -32,11 +34,13 @@ def check_input():
 
 def update():
     player.update()
+    meteor.update()
 
 def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
-    enemy.render(screen)
+    # enemy.render(screen)
+    meteor.render(screen)
 
     pygame.display.flip()
 
