@@ -1,12 +1,14 @@
 import pygame
 from config import SCREEN_WIDTH
 from entities.bullet import Bullet
+from entities.pools.bullet_pool import BulletPool
 from typing import List
 
 class Player: 
-    def __init__(self, x: int, y: int, speed: int = 5):
+    def __init__(self, x: int, y: int, bullet_pool: BulletPool, speed: int = 5):
         self.x = x
         self.y = y
+        self.bullet_pool = bullet_pool
         self.speed = speed
         self.width = 50
         self.height = 50

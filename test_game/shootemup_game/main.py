@@ -1,10 +1,9 @@
 import pygame
-import random
-from typing import List, Dict, Optional, Tuple, Union
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS
 from entities.player import Player
 from entities.enemy import Enemy
 from entities.meteor import Meteor
+from entities.pools.bullet_pool import BulletPool
 
 pygame.init()
 
@@ -18,7 +17,8 @@ clock: pygame.time.Clock = pygame.time.Clock()
 running: bool = True
 
 # game objs
-player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 100)
+bullet_pool = BulletPool()
+player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 100, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 meteor = Meteor(100, 100)
 
