@@ -13,7 +13,6 @@ class Player:
         self.width = 50
         self.height = 50
         self.color = pygame.Color("#ffffff")
-        self.bullets: List[Bullet] = []
         self.last_shot_time = 0
         self.shot_cooldown = 200
 
@@ -27,29 +26,13 @@ class Player:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
-            self.bullets.append(Bullet(self.x + self.width // 2 - 2, self.y - 25, 15, 1))
+            self.bullet_pool.get_bullet(self.x + self.width // 2 - 2, self.y - 25, 15, 1)
             self.last_shot_time = current_time
 
-        
-
     def update(self):
-        for bullet in self.bullets:
-            bullet.update()
-
-        # clean up dead bullets
-        alive_bullets_left = []
-        for bullet in self.bullets:
-            if bullet.is_alive:
-                alive_bullets_left.append(bullet)
-
-        self.bullets = alive_bullets_left
+        pass
 
     def render(self, screen: pygame.Surface):
-        # bullets
-        for bullet in self.bullets:
-            bullet.render(screen)
-
-
         # left wing
         pygame.draw.polygon(screen, 
                             self.color,

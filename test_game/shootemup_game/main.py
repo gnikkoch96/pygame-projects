@@ -35,12 +35,14 @@ def check_input():
 def update():
     player.update()
     meteor.update()
+    bullet_pool.update_all()
 
 def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
     # enemy.render(screen)
     meteor.render(screen)
+    bullet_pool.render_all(screen)
 
     pygame.display.flip()
 
