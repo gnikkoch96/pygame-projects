@@ -10,11 +10,12 @@ class Player:
         self.y = y
         self.bullet_pool = bullet_pool
         self.speed = speed
-        self.width = 50
-        self.height = 50
+        self.width = 25
+        self.height = 25
         self.color = pygame.Color("#ffffff")
         self.last_shot_time = 0
         self.shot_cooldown = 200
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def handle_input(self, keys):
         current_time = pygame.time.get_ticks()
@@ -26,21 +27,46 @@ class Player:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
-            self.bullet_pool.get_bullet(self.x + self.width // 2 - 2, self.y - 25, 15, 1)
+            self.bullet_pool.get_bullet(self.x + self.width // 2 - 5, self.y, 15, 1)
             self.last_shot_time = current_time
 
     def update(self):
-        pass
+        self.rect.topleft = (self.x, self.y)
 
     def render(self, screen: pygame.Surface):
+        # canon
+        pygame.draw.rect(screen, pygame.Color(self.color), (self.x + self.width // 2 - 4, self.y - 10, 10, 10))
+        
+        # body
+        pygame.draw.rect(screen, pygame.Color(self.color), self.rect)
+        
+        # left wing
         pygame.draw.polygon(screen, 
-            self.color,
-            [
-                (self.x, self.y),
-                (self.x + self.width, self.y),
-                (self.x + self.width // 2, self.y - 25)
-            ],
-            width=2)
+                            self.color,
+                            [
+                                (self.x, self.y),
+                                (self.x - 15, self.y + self.height // 2 + 25),
+                                (self.x, self.y + self.height)
+                            ],
+                            width=2)
+        # right wing
+        pygame.draw.polygon(screen, 
+                            self.color,
+                            [
+                                (self.x + self.width, self.y),
+                                (self.x + self.width + 15, self.y + self.height // 2+ 25),
+                                (self.x + self.width, self.y + self.height)
+                            ],
+                            width=2)
+
+        # pygame.draw.polygon(screen, 
+        #     self.color,
+        #     [
+        #         (self.x, self.y),
+        #         (self.x + self.width, self.y),
+        #         (self.x + self.width // 2, self.y - 25)
+        #     ],
+        #     width=2)
 
 
 

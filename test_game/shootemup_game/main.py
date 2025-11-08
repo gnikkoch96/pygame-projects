@@ -20,13 +20,13 @@ running: bool = True
 
 # game objs
 bullet_pool: BulletPool = BulletPool()
-player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 25, bullet_pool)
+player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 
 
 meteor_pool: MeteorPool = MeteorPool()
 last_meteor_spawn: int = 0
-meteor_spawn_rate: int = 2000
+meteor_spawn_rate: int = 1000
 
 def handle_meteor_generation():
     global last_meteor_spawn
@@ -57,6 +57,11 @@ def update():
     player.update()
     meteor_pool.update_all()
     bullet_pool.update_all()
+
+    # check for collisions
+    for meteor in meteor_pool.active_meteors[:]:
+        pass
+
 
 def render():
     screen.fill(BACKGROUND_COLOR)
