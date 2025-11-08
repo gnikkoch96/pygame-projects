@@ -17,6 +17,10 @@ class MeteorPool:
             meteor.height = size
             meteor.speed = speed
             meteor.is_alive = True
+            meteor.rect.x = x
+            meteor.rect.y = y
+            meteor.rect.width = size
+            meteor.rect.height = size
 
             # we need to update the surface of the meteor as well to the new size (initiailly at size 0)
             meteor.surface = pygame.Surface((meteor.width, meteor.height), pygame.SRCALPHA)

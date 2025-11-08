@@ -60,7 +60,8 @@ def update():
 
     # check for collisions
     for meteor in meteor_pool.active_meteors[:]:
-        pass
+        if player.hitbox.colliderect(meteor.rect):
+            print("Collision")
 
 
 def render():
