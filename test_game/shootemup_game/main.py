@@ -20,7 +20,7 @@ running: bool = True
 
 # game objs
 bullet_pool: BulletPool = BulletPool()
-player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 100, bullet_pool)
+player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 25, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 
 
@@ -35,8 +35,9 @@ def handle_meteor_generation():
     current_time = pygame.time.get_ticks()
     if current_time - last_meteor_spawn > meteor_spawn_rate:
         rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
-        
-        meteor_pool.get_meteor(rand_x, 0)
+        rand_size = random.randint(10, 50)
+        rand_speed = random.randint(1, 5)
+        meteor_pool.get_meteor(rand_x, 0, rand_size, rand_speed)
         last_meteor_spawn = current_time
 
 def check_input():
