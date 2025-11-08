@@ -40,6 +40,20 @@ def handle_meteor_generation():
         meteor_pool.get_meteor(rand_x, 0, rand_size, rand_speed)
         last_meteor_spawn = current_time
 
+def check_collisions():
+    # player/meteor collisions
+    for meteor in meteor_pool.active_meteors[:]:
+        # player collides with meteor
+        if player.hitbox.colliderect(meteor.rect):
+            meteor.is_alive = False
+
+    # bullet/meteor collision
+    for bullet in bullet_pool.active_bullets[:]:
+        for meteor in meteor_pool.active_meteors[:]:
+            if bullet.rect.colliderect(meteor.rect):
+                bullet.is_alive = False
+                meteor.is_alive = False
+
 def check_input():
     global running
 
@@ -53,16 +67,10 @@ def check_input():
 def update():
     # meteor generation
     handle_meteor_generation()
-
     player.update()
     meteor_pool.update_all()
     bullet_pool.update_all()
-
-    # check for collisions
-    for meteor in meteor_pool.active_meteors[:]:
-        if player.hitbox.colliderect(meteor.rect):
-            meteor.is_alive = False
-
+    check_collisions()
 
 def render():
     screen.fill(BACKGROUND_COLOR)
