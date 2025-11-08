@@ -61,7 +61,7 @@ def update():
     # check for collisions
     for meteor in meteor_pool.active_meteors[:]:
         if player.hitbox.colliderect(meteor.rect):
-            print("Collision")
+            meteor.is_alive = False
 
 
 def render():

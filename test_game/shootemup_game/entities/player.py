@@ -16,7 +16,7 @@ class Player:
         self.last_shot_time = 0
         self.shot_cooldown = 200
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.hitbox = pygame.Rect(self.rect.x - 15, self.rect.y + 10, self.rect.width, self.rect.height)
+        self.hitbox = pygame.Rect(self.x, self.y, self.width + 32, self.height + 30)
 
     def handle_input(self, keys):
         current_time = pygame.time.get_ticks()
@@ -34,7 +34,7 @@ class Player:
     def update(self):
         # Update rect to match expanded bounding box
         self.rect.topleft = (self.x, self.y)
-        self.hitbox.topleft = (self.rect.x - 15, self.rect.y + 10)
+        self.hitbox.topleft = (self.rect.x - 15, self.rect.y - 15)
 
     def render(self, screen: pygame.Surface):
         # canon
@@ -61,6 +61,9 @@ class Player:
                                 (self.x + self.width, self.y + self.height)
                             ],
                             width=2)
+        
+        # hitbox
+        pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
 
         # pygame.draw.polygon(screen, 
         #     self.color,
