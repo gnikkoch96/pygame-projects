@@ -1,7 +1,8 @@
 import pygame
+from config import SCREEN_HEIGHT
 
 class Meteor:
-    def __init__(self, x: int, y: int = 0, size: int = 25, speed: int = 2):
+    def __init__(self, x: int, y: int, size: int, speed: int):
         self.x = x
         self.y = y
         self.width = size
@@ -11,7 +12,7 @@ class Meteor:
         self.angle = 0
         self.rotation_speed: int = 2
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height) 
-
+        self.is_alive: bool = True
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         pygame.draw.rect(self.surface, pygame.Color(self.color), (0, 0, self.width, self.height))
 
@@ -19,6 +20,9 @@ class Meteor:
         self.y += self.speed
         self.angle += self.rotation_speed
         self.rect.center = (self.x + self.width // 2, self.y + self.height // 2)
+
+        if self.y > SCREEN_HEIGHT:
+            self.is_alive = False
 
 
     def render(self, screen: pygame.Surface):
