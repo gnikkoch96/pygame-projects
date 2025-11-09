@@ -23,6 +23,7 @@ remainint_time: int = TIME_LIMIT
 
 # ui objs
 hud_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 
 # game objs
 bullet_pool: BulletPool = BulletPool()
@@ -60,6 +61,7 @@ def check_collisions():
         # player collides with meteor
         if player.hitbox.colliderect(meteor.rect):
             meteor.is_alive = False
+            show_game_over_dialog()
 
     # bullet/meteor collision
     for bullet in bullet_pool.active_bullets[:]:
@@ -70,6 +72,83 @@ def check_collisions():
 
                 # update score
                 score += 1
+
+
+def show_game_over_dialog():
+    global score, start_time, remaining_time, game_finished, last_generation_time, running
+
+    overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+    overlay.set_alpha(128)
+    overlay.fill((0, 0, 0))
+    screen.blit(overlay, (0, 0))
+
+    # dialog box
+    dialog_width, dialog_height = 400, 250
+    dialog_x = (SCREEN_WIDTH - dialog_width) // 2
+    dialog_y = (SCREEN_HEIGHT - dialog_height) // 2
+
+    # main dialog box
+    pygame.draw.rect(screen, pygame.Color("#ffffff"), (dialog_x, dialog_y, dialog_width, dialog_height))
+
+    # border color
+    pygame.draw.rect(screen, pygame.Color('#000000'), (dialog_x, dialog_y, dialog_width, dialog_height), 2)
+
+    message = f"Your Final Score: {score}"
+    text = hud_font.render(message, True, pygame.Color("#000000"))
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    screen.blit(text, text_rect)
+
+    # buttons
+    button_width, button_height = 100, 50
+
+    # retry button
+    retry_button_x = dialog_x + (dialog_width - button_width) // 2 - 75
+    retry_button_y = dialog_y + dialog_height - button_height - 20
+    pygame.draw.rect(screen, pygame.Color("#4CAF50"), (retry_button_x, retry_button_y, button_width, button_height))
+    pygame.draw.rect(screen, pygame.Color("#000000"), (retry_button_x, retry_button_y, button_width, button_height), 1)
+
+    # retry button text
+    button_text = button_font.render("Restart", True, pygame.Color('#ffffff'))
+    button_text_rect = button_text.get_rect(center=(retry_button_x + button_width // 2, retry_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
+    # exit button
+    exit_button_x = dialog_x + (dialog_width - button_width) // 2 + 75
+    exit_button_y = dialog_y + dialog_height - button_height - 20
+    pygame.draw.rect(screen, pygame.Color("#AF594C"), (exit_button_x, exit_button_y, button_width, button_height))
+    pygame.draw.rect(screen, pygame.Color("#000000"), (exit_button_x, exit_button_y, button_width, button_height), 1)
+
+    # exit button text
+    button_text = button_font.render("Exit", True, pygame.Color("#ffffff"))
+    button_text_rect = button_text.get_rect(center=(exit_button_x + button_width // 2, exit_button_y + button_height // 2))
+    screen.blit(button_text, button_text_rect)
+
+    pygame.display.flip()
+
+    waiting = True
+    while waiting: 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type in (pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN):
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                # clicked on retry button
+                if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
+                    score = 0
+                    bullet_pool.active_bullets.clear()
+                    meteor_pool.active_meteors.clear()
+                    start_time = pygame.time.get_ticks()
+                    remaining_time = TIME_LIMIT
+                    game_finished = False
+                    last_generation_time = 0
+                    waiting = False # close dialog
+            
+                # clicked on exit button
+                elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
+                    waiting = False
+                    running = False
 
 def check_input():
     global running
