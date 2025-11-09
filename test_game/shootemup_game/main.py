@@ -1,6 +1,6 @@
 import pygame
 import random
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS, TIME_LIMIT
 from entities.player import Player
 from entities.enemy import Enemy
 from entities.meteor import Meteor
@@ -18,6 +18,8 @@ clock: pygame.time.Clock = pygame.time.Clock()
 # game logic
 running: bool = True
 score: int = 0
+start_time: int = 0
+remainint_time: int = TIME_LIMIT
 
 # ui objs
 hud_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
@@ -27,10 +29,16 @@ bullet_pool: BulletPool = BulletPool()
 player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 
-
 meteor_pool: MeteorPool = MeteorPool()
 last_meteor_spawn: int = 0
 meteor_spawn_rate: int = 1000
+
+def update_time():
+    global remaining_time
+
+    current_time = pygame.time.get_ticks()
+    elapsed_time = current_time - start_time
+    remaining_time = max(0, TIME_LIMIT - elapsed_time)
 
 def handle_meteor_generation():
     global last_meteor_spawn
@@ -46,7 +54,7 @@ def handle_meteor_generation():
 
 def check_collisions():
     global score
-    
+
     # player/meteor collisions
     for meteor in meteor_pool.active_meteors[:]:
         # player collides with meteor
@@ -74,6 +82,7 @@ def check_input():
     player.handle_input(keys)
 
 def update():
+    update_time()
     handle_meteor_generation()
     player.update()
     meteor_pool.update_all()
@@ -84,6 +93,9 @@ def update():
 def render_hud():
     score_label = hud_font.render(f"Score: {score}", True, pygame.Color('#ffffff'))
     screen.blit(score_label, (0, 0))
+
+    timer_label = hud_font.render(f"Time: {remaining_time // 1000}s", True, pygame.Color("#ffffff"))
+    screen.blit(timer_label, (SCREEN_WIDTH - 155, 0))
 
 def render():
     screen.fill(BACKGROUND_COLOR)
