@@ -33,11 +33,25 @@ enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 meteor_pool: MeteorPool = MeteorPool()
 
 def update_time():
-    global remaining_time
+    global remaining_time, meteor_pool
 
     current_time = pygame.time.get_ticks()
     elapsed_time = current_time - start_time
     remaining_time = max(0, TIME_LIMIT - elapsed_time)
+
+    # time based progression on the meteor_pool
+    progress = (TIME_LIMIT - remaining_time) / TIME_LIMIT if TIME_LIMIT > 0 else 1
+
+    # update meteor_pool based on time progression (spawn rate, size range, speed range)
+    meteor_pool.spawn_rate = max(1, (1000 - progress * 500)) # decrease spawn rate by 500 by the end
+
+    # in the end the range will be increased by 5 for min/max
+    meteor_pool.meteor_min_speed = int(max(1,  1 + progress * 5))
+    meteor_pool.meteor_max_speed = int(max(1,  3 + progress * 5))
+
+    # in the end the range will be increased by 15 for min/max
+    meteor_pool.meteor_min_size = int(max(1,  25 + progress * 25))
+    meteor_pool.meteor_max_size = int(max(1,  50 + progress * 25))
 
     if remaining_time == 0:
         show_game_over_dialog()
@@ -60,7 +74,7 @@ def check_collisions():
                 meteor.is_alive = False
 
                 # update score
-                score += 1
+                score += max(1, int(meteor_pool.meteor_max_size / meteor.width * 100))
 
 
 def show_game_over_dialog():
