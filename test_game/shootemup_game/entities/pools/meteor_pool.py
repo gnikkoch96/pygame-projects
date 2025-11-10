@@ -1,11 +1,25 @@
 import pygame
+import random
 from typing import List
 from entities.meteor import Meteor
+from config import SCREEN_WIDTH
 
 class MeteorPool:
     def __init__(self, max_meteors: int = 10):
         self.pool = [Meteor(0, 0, 0, 0) for _ in range(max_meteors)]
         self.active_meteors: List[Meteor] = []
+        self.spawn_rate = 1000
+        self.last_meteor_spawn = 0
+
+    def handle_meteor_generation(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_meteor_spawn > self.spawn_rate:
+            rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
+            
+            rand_size = random.randint(10, 50)
+            rand_speed = random.randint(1, 5)
+            self.get_meteor(rand_x, 0, rand_size, rand_speed)
+            self.last_meteor_spawn = current_time
     
     def get_meteor(self, x: int, y: int, size: int = 25, speed: int = 2) -> Meteor:
         # we are updating the stats of an unused meteor in the pool

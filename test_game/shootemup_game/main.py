@@ -31,8 +31,6 @@ player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 
 meteor_pool: MeteorPool = MeteorPool()
-last_meteor_spawn: int = 0
-meteor_spawn_rate: int = 1000
 
 def update_time():
     global remaining_time
@@ -41,17 +39,8 @@ def update_time():
     elapsed_time = current_time - start_time
     remaining_time = max(0, TIME_LIMIT - elapsed_time)
 
-def handle_meteor_generation():
-    global last_meteor_spawn
-    # print("Calling Meteors!")
-
-    current_time = pygame.time.get_ticks()
-    if current_time - last_meteor_spawn > meteor_spawn_rate:
-        rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
-        rand_size = random.randint(10, 50)
-        rand_speed = random.randint(1, 5)
-        meteor_pool.get_meteor(rand_x, 0, rand_size, rand_speed)
-        last_meteor_spawn = current_time
+    if remaining_time == 0:
+        show_game_over_dialog()
 
 def check_collisions():
     global score
@@ -162,8 +151,8 @@ def check_input():
 
 def update():
     update_time()
-    handle_meteor_generation()
     player.update()
+    meteor_pool.handle_meteor_generation()
     meteor_pool.update_all()
     bullet_pool.update_all()
     check_collisions()
