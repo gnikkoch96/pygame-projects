@@ -1,5 +1,6 @@
 import pygame
 import random
+from typing import List, Dict, Union
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS, TIME_LIMIT
 from entities.player import Player
 from entities.enemy import Enemy
@@ -25,11 +26,13 @@ remainint_time: int = TIME_LIMIT
 hud_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 
+# list of {'text': str, 'x': int, 'y': int, 'alpha': int, 'timer': int}
+text_animations: List[Dict[str, Union[str, int]]] = [] 
+
 # game objs
 bullet_pool: BulletPool = BulletPool()
 player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
-
 meteor_pool: MeteorPool = MeteorPool()
 
 def update_time():
@@ -75,6 +78,16 @@ def check_collisions():
 
                 # update score
                 score += max(1, int(meteor_pool.meteor_max_size / meteor.width * 100))
+
+                # add animation earned
+                text_animations.append({
+                    'text': f"+{score}",
+                    'x': meteor.x,
+                    'y': meteor.y,
+                    'alpha': 255,
+                    'text_color': "#ffffff",
+                    'timer': 180 # 3 seconds at 60FPS
+                })
 
 
 def show_game_over_dialog():
@@ -163,6 +176,16 @@ def check_input():
     keys = pygame.key.get_pressed()
     player.handle_input(keys)
 
+def update_text_animations():
+    # update animations
+    for anim in text_animations[:]:
+        anim['timer'] -= 1
+        anim['alpha'] = max(0, int(255 * (anim['timer'] / 180)))
+        anim['y'] -= 1 
+
+        if anim['timer'] <= 0:
+            text_animations.remove(anim)
+
 def update():
     update_time()
     player.update()
@@ -170,6 +193,7 @@ def update():
     meteor_pool.update_all()
     bullet_pool.update_all()
     check_collisions()
+    update_text_animations()
 
 def render_hud():
     score_label = hud_font.render(f"Score: {score}", True, pygame.Color('#ffffff'))
@@ -178,12 +202,19 @@ def render_hud():
     timer_label = hud_font.render(f"Time: {remaining_time // 1000}s", True, pygame.Color("#ffffff"))
     screen.blit(timer_label, (SCREEN_WIDTH - 155, 0))
 
+def render_text_animations():
+    for anim in text_animations:
+        text_surf = button_font.render(anim['text'], True, pygame.Color(anim['text_color']))
+        text_surf.set_alpha(anim['alpha'])
+        screen.blit(text_surf, (anim['x'], anim['y']))
+
 def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
     meteor_pool.render_all(screen)
     bullet_pool.render_all(screen)
     render_hud()
+    render_text_animations()
 
     pygame.display.flip()
 
