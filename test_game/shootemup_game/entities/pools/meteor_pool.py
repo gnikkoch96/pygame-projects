@@ -9,6 +9,8 @@ class MeteorPool:
         self.pool = [Meteor(0, 0, 0, 0) for _ in range(max_meteors)]
         self.active_meteors: List[Meteor] = []
         self.spawn_rate = 1000
+        self.speed_range = [1, 5]
+        self.size_range = [10, 50]
         self.last_meteor_spawn = 0
 
     def handle_meteor_generation(self):
@@ -16,8 +18,8 @@ class MeteorPool:
         if current_time - self.last_meteor_spawn > self.spawn_rate:
             rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
             
-            rand_size = random.randint(10, 50)
-            rand_speed = random.randint(1, 5)
+            rand_size = random.randint(self.size_range[0], self.size_range[1])
+            rand_speed = random.randint(self.speed_range[0], self.speed_range[1])
             self.get_meteor(rand_x, 0, rand_size, rand_speed)
             self.last_meteor_spawn = current_time
     

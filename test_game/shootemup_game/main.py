@@ -157,7 +157,6 @@ def update():
     bullet_pool.update_all()
     check_collisions()
 
-
 def render_hud():
     score_label = hud_font.render(f"Score: {score}", True, pygame.Color('#ffffff'))
     screen.blit(score_label, (0, 0))
