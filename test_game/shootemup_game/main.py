@@ -77,7 +77,7 @@ def check_collisions():
                 meteor.is_alive = False
 
                 # update score
-                score += max(1, int(meteor_pool.meteor_max_size / meteor.width * 100))
+                score += max(1, int(meteor_pool.meteor_max_size / meteor.width * 10))
 
                 # add animation earned
                 text_animations.append({
