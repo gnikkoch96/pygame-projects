@@ -7,11 +7,10 @@ class Enemy:
     RED_COLOR = "#db3e3e"
     GREEN_COLOR = "#3edb6d"
 
-    def __init__(self, x: int, y: int, hp: int, path: List[Union[int, int]], speed: int = 2, shot_cooldown: int = 1000):
+    def __init__(self, x: int, y: int, hp: int, speed: int = 2, shot_cooldown: int = 1000):
         self.x = x
         self.y = y
         self.hp = hp
-        self.path = path
         self.speed = speed
         self.width = 50
         self.height = 50
