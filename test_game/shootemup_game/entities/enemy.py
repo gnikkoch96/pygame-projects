@@ -1,13 +1,14 @@
 import pygame
 from typing import List, Union
 from entities.bullet import Bullet
+from entities.pools.bullet_pool import BulletPool
 
 class Enemy:
     # class constants
     RED_COLOR = "#db3e3e"
     GREEN_COLOR = "#3edb6d"
 
-    def __init__(self, x: int, y: int, hp: int, speed: int = 2, shot_cooldown: int = 1000):
+    def __init__(self, x: int, y: int, hp: int, bullet_pool: BulletPool, speed: int = 2, shot_cooldown: int = 1000):
         self.x = x
         self.y = y
         self.hp = hp
@@ -19,6 +20,7 @@ class Enemy:
         self.last_shot_time = 0
         self.shot_cooldown = shot_cooldown
         self.is_alive: bool = True
+        self.bullet_pool = bullet_pool
 
         # color changes based on hp value
         if hp > 1:
@@ -26,6 +28,9 @@ class Enemy:
         else:
             self.color = Enemy.RED_COLOR
 
+    def shoot(self):
+        pass
+    
     def update(self):
         pass
 

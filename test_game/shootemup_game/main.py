@@ -7,6 +7,7 @@ from entities.enemy import Enemy
 from entities.meteor import Meteor
 from entities.pools.bullet_pool import BulletPool
 from entities.pools.meteor_pool import MeteorPool
+from entities.pools.enemy_pool import EnemyPool
 
 pygame.init()
 
@@ -31,9 +32,9 @@ text_animations: List[Dict[str, Union[str, int]]] = []
 
 # game objs
 bullet_pool: BulletPool = BulletPool()
-player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
-enemy = Enemy(100, 100, 1, [(0, 0), (SCREEN_HEIGHT + 100)])
 meteor_pool: MeteorPool = MeteorPool()
+enemy_pool: EnemyPool = EnemyPool()
+player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 
 def update_time():
     global remaining_time, meteor_pool
