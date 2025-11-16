@@ -33,7 +33,7 @@ text_animations: List[Dict[str, Union[str, int]]] = []
 # game objs
 bullet_pool: BulletPool = BulletPool()
 meteor_pool: MeteorPool = MeteorPool()
-enemy_pool: EnemyPool = EnemyPool()
+enemy_pool: EnemyPool = EnemyPool(bullet_pool)
 player = Player(SCREEN_WIDTH // 2 - 25, SCREEN_HEIGHT - 75, bullet_pool)
 
 def update_time():
@@ -190,8 +190,13 @@ def update_text_animations():
 def update():
     update_time()
     player.update()
+
     meteor_pool.handle_meteor_generation()
     meteor_pool.update_all()
+
+    enemy_pool.handle_enemy_generation()
+    enemy_pool.update_all()    
+
     bullet_pool.update_all()
     check_collisions()
     update_text_animations()
@@ -213,6 +218,7 @@ def render():
     screen.fill(BACKGROUND_COLOR)
     player.render(screen)
     meteor_pool.render_all(screen)
+    enemy_pool.render_all(screen)
     bullet_pool.render_all(screen)
     render_hud()
     render_text_animations()

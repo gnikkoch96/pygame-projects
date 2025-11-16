@@ -3,23 +3,28 @@ import random
 from typing import List
 from entities.enemy import Enemy
 from config import SCREEN_WIDTH
+from entities.pools.bullet_pool import BulletPool
 
 class EnemyPool: 
-    def __init__(self, max_enemies: int = 2):
-        self.pool = [Enemy(0, 0, 0) for _ in range(max_enemies)]
+    def __init__(self, bullet_pool: BulletPool, max_enemies: int = 2):
+        self.pool = [Enemy(0, 0, 0, bullet_pool) for _ in range(max_enemies)]
         self.active_enemies: List[Enemy] = []
+        self.last_enemy_spawn: int = 0
+        self.spawn_rate: int = 1000
+        self.max_spawn = 1
 
     def handle_enemy_generation(self):
+        # don't spawn more than the max spawn
+        if len(self.active_enemies) >= self.max_spawn: return
+
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_meteor_spawn > self.spawn_rate:
+        if current_time - self.last_enemy_spawn > self.spawn_rate:
             rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
             
-            rand_size = random.randint(self.meteor_min_size, self.meteor_max_size)
-            rand_speed = random.randint(self.meteor_min_speed, self.meteor_max_speed)
-            self.get_meteor(rand_x, 0, rand_size, rand_speed)
-            self.last_meteor_spawn = current_time
+            self.get_enemy(rand_x, 0, 1)
+            self.last_enemy_spawn = current_time
 
-    def get_enemy(self, x: int, y: int, hp: int, speed: int, shot_cooldown: int = 1000):
+    def get_enemy(self, x: int, y: int, hp: int, speed: int = 2, shot_cooldown: int = 1000):
         if self.pool:
             enemy = self.pool.pop()
             enemy.x = x
@@ -44,6 +49,6 @@ class EnemyPool:
                 self.active_enemies.remove(enemy)
                 self.pool.append(enemy)
         
-    def render_all(self):
+    def render_all(self, screen: pygame.Surface):
         for enemy in self.active_enemies:
-            enemy.render()
+            enemy.render(screen)
