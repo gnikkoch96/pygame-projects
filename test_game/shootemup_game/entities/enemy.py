@@ -35,7 +35,7 @@ class Enemy:
     
     def update(self, player: Player):
         # fly to the center of the screen in the beginning 
-        if self.y <= SCREEN_HEIGHT // 2:
+        if self.y <= SCREEN_HEIGHT // 3:
             self.y += self.speed
         
         # update center to fly towards player
