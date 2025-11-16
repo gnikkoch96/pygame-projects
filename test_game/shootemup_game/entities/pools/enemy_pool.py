@@ -4,6 +4,7 @@ from typing import List
 from entities.enemy import Enemy
 from config import SCREEN_WIDTH
 from entities.pools.bullet_pool import BulletPool
+from entities.player import Player
 
 class EnemyPool: 
     def __init__(self, bullet_pool: BulletPool, max_enemies: int = 2):
@@ -38,9 +39,9 @@ class EnemyPool:
         self.active_enemies.append(enemy)
         return enemy
 
-    def update_all(self):
+    def update_all(self, player: Player):
         for enemy in self.active_enemies:
-            enemy.update()
+            enemy.update(player)
 
             if enemy.hp == 0: 
                 enemy.is_alive = False

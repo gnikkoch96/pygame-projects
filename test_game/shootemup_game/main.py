@@ -195,7 +195,7 @@ def update():
     meteor_pool.update_all()
 
     enemy_pool.handle_enemy_generation()
-    enemy_pool.update_all()    
+    enemy_pool.update_all(player)    
 
     bullet_pool.update_all()
     check_collisions()
