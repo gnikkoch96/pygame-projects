@@ -17,7 +17,6 @@ class Enemy:
         self.speed = speed
         self.width = 50
         self.height = 50
-        self.bullets: List[Bullet] = []
         self.current_target_index = 0 
         self.last_shot_time = 0
         self.shot_cooldown = shot_cooldown
@@ -31,26 +30,28 @@ class Enemy:
             self.color = Enemy.RED_COLOR
 
     def shoot(self):
-        pass
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_shot_time >= self.shot_cooldown:
+            self.bullet_pool.get_bullet(self.x, self.y, 2, 0)
+            self.last_shot_time = current_time
     
     def update(self, player: Player):
         # fly to the center of the screen in the beginning 
         if self.y <= SCREEN_HEIGHT // 3:
             self.y += self.speed
+        else:
+            # update center to fly towards player
+            if self.x < player.x:
+                self.x += self.speed
+            elif self.x > player.x:
+                self.x -= self.speed
+            
+            self.shoot()
+
         
-        # update center to fly towards player
-        if self.x < player.x:
-            self.x += self.speed
-        elif self.x > player.x:
-            self.x -= self.speed
         
 
     def render(self, screen: pygame.Surface):
-        # bullets
-        for bullet in self.bullets:
-            bullet.render(screen)
-
-
         # left wing
         pygame.draw.polygon(screen, 
                             self.color,

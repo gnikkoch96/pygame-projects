@@ -78,17 +78,19 @@ def check_collisions():
                 meteor.is_alive = False
 
                 # update score
-                score += max(1, int(meteor_pool.meteor_max_size / meteor.width * 10))
+                score_earned = max(1, int(meteor_pool.meteor_max_size / meteor.width * 10))
 
                 # add animation earned
                 text_animations.append({
-                    'text': f"+{score}",
+                    'text': f"+{score_earned}",
                     'x': meteor.x,
                     'y': meteor.y,
                     'alpha': 255,
                     'text_color': "#ffffff",
                     'timer': 180 # 3 seconds at 60FPS
                 })
+
+                score += score_earned
 
 
 def show_game_over_dialog():
