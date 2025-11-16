@@ -2,6 +2,7 @@ import pygame
 from typing import List, Union
 from entities.bullet import Bullet
 from entities.pools.bullet_pool import BulletPool
+from config import SCREEN_HEIGHT
 
 class Enemy:
     # class constants
@@ -32,7 +33,9 @@ class Enemy:
         pass
     
     def update(self):
-        pass
+        # fly to the center of the screen in the beginning 
+        if self.y <= SCREEN_HEIGHT // 2:
+            self.y += self.speed
 
     def render(self, screen: pygame.Surface):
         # bullets
