@@ -1,13 +1,13 @@
 import pygame
 from typing import List
-from entities.bullet import Bullet
+from entities.bullet import Bullet, BulletOwner, BulletDirection
 
 class BulletPool: 
     def __init__(self, max_bullets: int = 100):
         self.pool = [Bullet(0, 0) for _ in range(max_bullets)]
         self.active_bullets: List[Bullet] = [] 
     
-    def get_bullet(self, x: int, y: int, speed: int = 2, direction: int = 1) -> Bullet:
+    def get_bullet(self, x: int, y: int, speed: int = 2, direction: BulletDirection = BulletDirection.UP) -> Bullet:
         if self.pool:
             # get existing bullet from pool (if possible)
             bullet = self.pool.pop()

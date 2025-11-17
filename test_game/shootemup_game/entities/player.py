@@ -1,6 +1,6 @@
 import pygame
 from config import SCREEN_WIDTH
-from entities.bullet import Bullet
+from entities.bullet import BulletOwner, BulletDirection
 from entities.pools.bullet_pool import BulletPool
 from typing import List
 
@@ -28,7 +28,7 @@ class Player:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
-            self.bullet_pool.get_bullet(self.x + self.width // 2 - 5, self.y, 15, 1)
+            self.bullet_pool.get_bullet(self.x + self.width // 2 - 5, self.y, 15, BulletDirection.UP)
             self.last_shot_time = current_time
 
     def update(self):
