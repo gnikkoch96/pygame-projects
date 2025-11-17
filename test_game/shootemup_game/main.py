@@ -71,8 +71,10 @@ def check_collisions():
             meteor.is_alive = False
             show_game_over_dialog()
 
-    # bullet/meteor collision
+    # check for bullet collisions
     for bullet in bullet_pool.active_bullets[:]:
+
+        # bullet/meteor collision
         for meteor in meteor_pool.active_meteors[:]:
             # only collide when bullet comes from owner
             if bullet.rect.colliderect(meteor.rect) and bullet.owner == BulletOwner.PLAYER:
@@ -93,6 +95,13 @@ def check_collisions():
                 })
 
                 score += score_earned
+        
+        # bullet -> player collision
+        if bullet.owner == BulletOwner.ENEMY and bullet.rect.colliderect(player.hitbox):
+            bullet.is_alive = False
+            show_game_over_dialog()
+
+    
 
 
 def show_game_over_dialog():
