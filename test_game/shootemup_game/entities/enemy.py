@@ -1,6 +1,6 @@
 import pygame
 from typing import List, Union
-from entities.bullet import Bullet
+from entities.bullet import BulletOwner, BulletDirection
 from entities.pools.bullet_pool import BulletPool
 from config import SCREEN_HEIGHT
 from entities.player import Player
@@ -32,7 +32,7 @@ class Enemy:
     def shoot(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_shot_time >= self.shot_cooldown:
-            self.bullet_pool.get_bullet(self.x, self.y, 2, 0)
+            self.bullet_pool.get_bullet(self.x, self.y, 2, BulletDirection.DOWN, BulletOwner.ENEMY)
             self.last_shot_time = current_time
     
     def update(self, player: Player):
