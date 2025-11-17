@@ -6,9 +6,13 @@ class BulletOwner(Enum):
     PLAYER = "player"
     ENEMY = "enemy"
 
+class BulletDirection(Enum):
+    UP = 1
+    DOWN = 0
+
 class Bullet:
     # direction (1 = up, 0 = down)
-    def __init__(self, x: int, y: int, speed: int = 2, direction: int = 1, owner: BulletOwner = BulletOwner.PLAYER):
+    def __init__(self, x: int, y: int, speed: int = 2, direction: BulletDirection = BulletDirection.UP, owner: BulletOwner = BulletOwner.PLAYER):
         self.x = x
         self.y = y
         self.width = 10
@@ -24,13 +28,13 @@ class Bullet:
         pygame.draw.rect(screen, pygame.Color(self.color), self.rect)
 
     def update(self):
-        if self.direction == 1:
+        if self.direction == BulletDirection.UP:
             self.y -= self.speed
             self.rect.topleft = (self.x, self.y)
 
             if self.y <= 0:
-                self.is_alive = False
-        else: 
+                self.is_alive = False 
+        else: # down
             self.y += self.speed
             self.rect.topleft = (self.x, self.y)
 
