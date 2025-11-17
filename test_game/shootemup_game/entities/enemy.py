@@ -54,8 +54,8 @@ class Enemy:
                             self.color,
                             [
                                 (self.x, self.y),
-                                (self.x - 25, self.y - self.height),
-                                (self.x, self.y - self.height)
+                                (self.x - 15, self.y - self.height // 2),
+                                (self.x, self.y - self.height // 2)
                             ],
                             width=2)
         # right wing
@@ -63,8 +63,8 @@ class Enemy:
                             self.color,
                             [
                                 (self.x + self.width, self.y),
-                                (self.x + self.width + 25, self.y - self.height),
-                                (self.x + self.width, self.y - self.height)
+                                (self.x + self.width + 15, self.y - self.height // 2),
+                                (self.x + self.width, self.y - self.height // 2)
                             ],
                             width=2)
 
