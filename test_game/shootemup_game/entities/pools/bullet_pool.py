@@ -7,7 +7,7 @@ class BulletPool:
         self.pool = [Bullet(0, 0) for _ in range(max_bullets)]
         self.active_bullets: List[Bullet] = [] 
     
-    def get_bullet(self, x: int, y: int, speed: int = 2, direction: BulletDirection = BulletDirection.UP) -> Bullet:
+    def get_bullet(self, x: int, y: int, speed: int = 2, direction: BulletDirection = BulletDirection.UP, owner: BulletOwner = BulletOwner.PLAYER) -> Bullet:
         if self.pool:
             # get existing bullet from pool (if possible)
             bullet = self.pool.pop()
@@ -16,8 +16,9 @@ class BulletPool:
             bullet.speed = speed
             bullet.direction = direction
             bullet.is_alive = True
+            bullet.owner = owner
         else:
-            bullet = Bullet(x, y, speed, direction)
+            bullet = Bullet(x, y, speed, direction, owner)
         
         self.active_bullets.append(bullet) 
         return bullet

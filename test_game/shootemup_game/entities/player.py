@@ -28,7 +28,7 @@ class Player:
             self.x += self.speed
 
         if keys[pygame.K_SPACE] and current_time - self.last_shot_time > self.shot_cooldown:
-            self.bullet_pool.get_bullet(self.x + self.width // 2 - 5, self.y, 15, BulletDirection.UP)
+            self.bullet_pool.get_bullet(self.x + self.width // 2 - 5, self.y, 15, BulletDirection.UP, BulletOwner.PLAYER)
             self.last_shot_time = current_time
 
     def update(self):
