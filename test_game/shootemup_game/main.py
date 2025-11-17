@@ -5,6 +5,7 @@ from config import SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR, FPS, TIME_LIMI
 from entities.player import Player
 from entities.enemy import Enemy
 from entities.meteor import Meteor
+from entities.bullet import BulletOwner
 from entities.pools.bullet_pool import BulletPool
 from entities.pools.meteor_pool import MeteorPool
 from entities.pools.enemy_pool import EnemyPool
@@ -73,7 +74,8 @@ def check_collisions():
     # bullet/meteor collision
     for bullet in bullet_pool.active_bullets[:]:
         for meteor in meteor_pool.active_meteors[:]:
-            if bullet.rect.colliderect(meteor.rect):
+            # only collide when bullet comes from owner
+            if bullet.rect.colliderect(meteor.rect) and bullet.owner == BulletOwner.PLAYER:
                 bullet.is_alive = False
                 meteor.is_alive = False
 
