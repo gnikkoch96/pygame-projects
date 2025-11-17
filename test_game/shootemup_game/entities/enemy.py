@@ -48,9 +48,6 @@ class Enemy:
             
             self.shoot()
 
-        
-        
-
     def render(self, screen: pygame.Surface):
         # left wing
         pygame.draw.polygon(screen, 

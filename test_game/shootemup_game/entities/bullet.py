@@ -1,13 +1,19 @@
 import pygame
+from enum import Enum
 from config import SCREEN_HEIGHT
+
+class BulletOwner(Enum):
+    PLAYER = "player"
+    ENEMY = "enemy"
 
 class Bullet:
     # direction (1 = up, 0 = down)
-    def __init__(self, x: int, y: int, speed: int = 2, direction: int = 1):
+    def __init__(self, x: int, y: int, speed: int = 2, direction: int = 1, owner: BulletOwner = BulletOwner.PLAYER):
         self.x = x
         self.y = y
         self.width = 10
         self.height = 10
+        self.owner = owner
         self.speed = speed
         self.color = pygame.Color("#ffffff")
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
