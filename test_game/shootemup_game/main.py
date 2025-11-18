@@ -102,9 +102,15 @@ def check_collisions():
             show_game_over_dialog()
 
         # player bullet -> enemy collision
-        # for enemy in enemy_pool.active_enemies[:]:
-        #     if bullet.owner == BulletOwner.PLAYER and bullet.rect.collidedict(enemy.hitbox):
-        #         pass
+        for enemy in enemy_pool.active_enemies[:]:
+            if bullet.owner == BulletOwner.PLAYER and bullet.rect.colliderect(enemy.hitbox):
+                enemy.hp -= 1
+
+                if enemy.hp <= 0:
+                    enemy.is_alive = False
+                    bullet.is_alive = False
+
+
 
     
 
