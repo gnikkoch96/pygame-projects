@@ -110,7 +110,20 @@ def check_collisions():
                     enemy.is_alive = False
                     bullet.is_alive = False
 
+                    # todo refactor this somehow
+                    score_earned = 150
 
+                    # add animation earned
+                    text_animations.append({
+                        'text': f"+{score_earned}",
+                        'x': enemy.x,
+                        'y': enemy.y,
+                        'alpha': 255,
+                        'text_color': "#ffffff",
+                        'timer': 180 # 3 seconds at 60FPS
+                    })
+
+                    score += score_earned
 
     
 
