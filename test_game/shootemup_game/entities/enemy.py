@@ -22,6 +22,7 @@ class Enemy:
         self.shot_cooldown = shot_cooldown
         self.is_alive: bool = True
         self.bullet_pool = bullet_pool
+        self.hitbox = pygame.Rect(self.x, self.y, self.width + 32, self.height + 30)
 
         # color changes based on hp value
         if hp > 1:
@@ -47,6 +48,8 @@ class Enemy:
                 self.x -= self.speed
             
             self.shoot()
+        
+        self.hitbox.topleft = (self.x - 15, self.y - self.height)
 
     def render(self, screen: pygame.Surface):
         # left wing
@@ -87,6 +90,9 @@ class Enemy:
                         (self.x + self.width // 2, self.y + 25)
                     ],
                     width=0)
+
+        # hitbox
+        pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
 
         
         
