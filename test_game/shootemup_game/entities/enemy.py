@@ -57,7 +57,7 @@ class Enemy:
                                 (self.x - 15, self.y - self.height // 2),
                                 (self.x, self.y - self.height // 2)
                             ],
-                            width=2)
+                            width=0)
         # right wing
         pygame.draw.polygon(screen, 
                             self.color,
@@ -66,7 +66,7 @@ class Enemy:
                                 (self.x + self.width + 15, self.y - self.height // 2),
                                 (self.x + self.width, self.y - self.height // 2)
                             ],
-                            width=2)
+                            width=0)
 
         # top body
         pygame.draw.polygon(screen, 
@@ -76,7 +76,7 @@ class Enemy:
                 (self.x + self.width, self.y),
                 (self.x + self.width // 2, self.y - 25)
             ],
-            width=2)
+            width=0)
         
         # bottom body
         pygame.draw.polygon(screen, 
@@ -86,7 +86,7 @@ class Enemy:
                         (self.x + self.width, self.y),
                         (self.x + self.width // 2, self.y + 25)
                     ],
-                    width=2)
+                    width=0)
 
         
         
