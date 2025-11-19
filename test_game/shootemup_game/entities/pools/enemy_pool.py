@@ -15,7 +15,6 @@ class EnemyPool:
         self.max_spawn = 1
 
     def handle_enemy_generation(self):
-        # don't spawn more than the max spawn
         if len(self.active_enemies) >= self.max_spawn: return
 
         current_time = pygame.time.get_ticks()
@@ -43,12 +42,10 @@ class EnemyPool:
         for enemy in self.active_enemies:
             enemy.update(player)
 
-            if enemy.hp == 0: 
-                enemy.is_alive = False
-
             if not enemy.is_alive:
                 self.active_enemies.remove(enemy)
                 self.pool.append(enemy)
+                enemy.is_alive = True # prevent from automatically being removed the moment they spawn
         
     def render_all(self, screen: pygame.Surface):
         for enemy in self.active_enemies:
