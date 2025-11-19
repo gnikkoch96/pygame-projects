@@ -58,6 +58,8 @@ def update_time():
     meteor_pool.meteor_min_size = int(max(1,  25 + progress * 25))
     meteor_pool.meteor_max_size = int(max(1,  50 + progress * 25))
 
+    
+
     if remaining_time == 0:
         show_game_over_dialog()
 

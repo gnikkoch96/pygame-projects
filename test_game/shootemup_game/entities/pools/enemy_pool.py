@@ -22,7 +22,6 @@ class EnemyPool:
             rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
             
             self.get_enemy(rand_x, 0, 1)
-            self.last_enemy_spawn = current_time
 
     def get_enemy(self, x: int, y: int, hp: int, speed: int = 2, shot_cooldown: int = 1000):
         if self.pool:
@@ -43,6 +42,8 @@ class EnemyPool:
             enemy.update(player)
 
             if not enemy.is_alive:
+                # only start to spawn after the enemy has died
+                self.last_enemy_spawn = pygame.time.get_ticks()
                 self.active_enemies.remove(enemy)
                 self.pool.append(enemy)
                 enemy.is_alive = True # prevent from automatically being removed the moment they spawn
