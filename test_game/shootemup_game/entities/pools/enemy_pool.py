@@ -13,6 +13,7 @@ class EnemyPool:
         self.last_enemy_spawn: int = 0
         self.spawn_rate: int = 1000
         self.max_spawn = 1
+        self.max_enemy_hp = 1
 
     def handle_enemy_generation(self):
         if len(self.active_enemies) >= self.max_spawn: return
@@ -21,7 +22,7 @@ class EnemyPool:
         if current_time - self.last_enemy_spawn > self.spawn_rate:
             rand_x = random.randint(0, SCREEN_WIDTH) # we should also subtract by meteor size if possible for the max range
             
-            self.get_enemy(rand_x, 0, 1)
+            self.get_enemy(rand_x, 0, 2)
 
     def get_enemy(self, x: int, y: int, hp: int, speed: int = 2, shot_cooldown: int = 1000):
         if self.pool:

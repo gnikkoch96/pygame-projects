@@ -58,7 +58,11 @@ def update_time():
     meteor_pool.meteor_min_size = int(max(1,  25 + progress * 25))
     meteor_pool.meteor_max_size = int(max(1,  50 + progress * 25))
 
-    
+    # 30 - one enemy (1hp) 20 - one enemy (1hp and 2hp) 15 - two enemy (1hp and 2hp)
+    if remaining_time > 15 and remaining_time <= 20:
+        enemy_pool.max_enemy_hp = 2
+    elif remaining_time <= 15:
+        enemy_pool.max_spawn = 2
 
     if remaining_time == 0:
         show_game_over_dialog()
@@ -107,10 +111,10 @@ def check_collisions():
         for enemy in enemy_pool.active_enemies[:]:
             if bullet.owner == BulletOwner.PLAYER and bullet.rect.colliderect(enemy.hitbox):
                 enemy.hp -= 1
+                bullet.is_alive = False
 
                 if enemy.hp <= 0:
                     enemy.is_alive = False
-                    bullet.is_alive = False
 
                     # todo refactor this somehow
                     score_earned = 150
@@ -126,6 +130,8 @@ def check_collisions():
                     })
 
                     score += score_earned
+                
+
 
     
 

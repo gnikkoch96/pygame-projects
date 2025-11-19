@@ -24,11 +24,7 @@ class Enemy:
         self.bullet_pool = bullet_pool
         self.hitbox = pygame.Rect(self.x, self.y, self.width + 32, self.height + 30)
 
-        # color changes based on hp value
-        if hp > 1:
-            self.color = Enemy.GREEN_COLOR
-        else:
-            self.color = Enemy.RED_COLOR
+   
 
     def shoot(self):
         current_time = pygame.time.get_ticks()
@@ -37,6 +33,12 @@ class Enemy:
             self.last_shot_time = current_time
     
     def update(self, player: Player):
+        # color changes based on hp value
+        if self.hp > 1:
+            self.color = Enemy.GREEN_COLOR
+        else:
+            self.color = Enemy.RED_COLOR
+
         # fly to the center of the screen in the beginning 
         if self.y <= SCREEN_HEIGHT // 3:
             self.y += self.speed
