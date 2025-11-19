@@ -1,4 +1,5 @@
 import pygame
+import random
 from typing import List, Union
 from entities.bullet import BulletOwner, BulletDirection
 from entities.pools.bullet_pool import BulletPool
@@ -10,7 +11,7 @@ class Enemy:
     RED_COLOR = "#db3e3e"
     GREEN_COLOR = "#3edb6d"
 
-    def __init__(self, x: int, y: int, hp: int, bullet_pool: BulletPool, speed: int = 2, shot_cooldown: int = 1000):
+    def __init__(self, x: int, y: int, hp: int, bullet_pool: BulletPool, speed: int = 3, shot_cooldown: int = 1000):
         self.x = x
         self.y = y
         self.hp = hp
@@ -23,8 +24,6 @@ class Enemy:
         self.is_alive: bool = True
         self.bullet_pool = bullet_pool
         self.hitbox = pygame.Rect(self.x, self.y, self.width + 32, self.height + 30)
-
-   
 
     def shoot(self):
         current_time = pygame.time.get_ticks()
@@ -50,7 +49,7 @@ class Enemy:
                 self.x -= self.speed
             
             self.shoot()
-        
+
         self.hitbox.topleft = (self.x - 15, self.y - self.height)
 
     def render(self, screen: pygame.Surface):
@@ -94,7 +93,7 @@ class Enemy:
                     width=0)
 
         # hitbox
-        pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
+        # pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
 
         
         

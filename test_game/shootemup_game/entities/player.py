@@ -63,7 +63,7 @@ class Player:
                             width=2)
         
         # hitbox
-        pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
+        # pygame.draw.rect(screen, pygame.Color("red"), self.hitbox, width=2)
 
         # pygame.draw.polygon(screen, 
         #     self.color,
