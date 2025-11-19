@@ -59,9 +59,11 @@ def update_time():
     meteor_pool.meteor_max_size = int(max(1,  50 + progress * 25))
 
     # 30 - one enemy (1hp) 20 - one enemy (1hp and 2hp) 15 - two enemy (1hp and 2hp)
-    if remaining_time > 15 and remaining_time <= 20:
+    remaining_time_adj = remaining_time // 1000
+    if remaining_time_adj > 15 and remaining_time_adj <= 20:
         enemy_pool.max_enemy_hp = 2
-    elif remaining_time <= 15:
+    
+    if remaining_time_adj <= 15:
         enemy_pool.max_spawn = 2
 
     if remaining_time == 0:
