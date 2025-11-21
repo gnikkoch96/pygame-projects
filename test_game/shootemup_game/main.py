@@ -133,11 +133,6 @@ def check_collisions():
 
                     score += score_earned
                 
-
-
-    
-
-
 def show_game_over_dialog():
     global score, start_time, remaining_time, game_finished, last_generation_time, running
 
