@@ -1,5 +1,5 @@
 import pygame
-from config import SCREEN_HEIGHT, SCREEN_WIDTH, FPS
+from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS
 
 
 pygame.init()
@@ -24,7 +24,7 @@ def update():
     pass
 
 def render():
-    screen.fill(pygame.Color('#ffffff'))
+    screen.fill(pygame.Color(BACKGROUND_COLOR))
 
     pygame.display.flip()
 
