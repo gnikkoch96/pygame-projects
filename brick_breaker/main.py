@@ -5,7 +5,7 @@ from config import SCREEN_HEIGHT, SCREEN_WIDTH, FPS
 pygame.init()
 
 screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('Sprite Rendering Test')
+pygame.display.set_caption('Brick Breaker')
 
 # fps limiter
 clock: pygame.time.Clock = pygame.time.Clock()
