@@ -1,5 +1,6 @@
 import pygame
 from entities.ball import Ball
+from entities.player import Player
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS
 
 
@@ -16,6 +17,7 @@ running: bool = True
 
 # game objs
 ball: Ball = Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25)
 
 def check_input():
     global running
@@ -29,6 +31,7 @@ def update():
 
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
+    player.render(screen)
     ball.render(screen)
     pygame.display.flip()
 
