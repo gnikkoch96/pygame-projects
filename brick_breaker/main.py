@@ -1,4 +1,5 @@
 import pygame
+from entities.ball import Ball
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS
 
 
@@ -13,6 +14,9 @@ clock: pygame.time.Clock = pygame.time.Clock()
 # game logic
 running: bool = True
 
+# game objs
+ball: Ball = Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
 def check_input():
     global running
 
@@ -21,11 +25,11 @@ def check_input():
             running = False
 
 def update():
-    pass
+    ball.update()
 
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
-
+    ball.render(screen)
     pygame.display.flip()
 
 while running:
