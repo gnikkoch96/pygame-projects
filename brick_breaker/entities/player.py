@@ -3,7 +3,7 @@ from typing import Sequence
 from config import SCREEN_WIDTH
 
 class Player:
-    def __init__(self, x: int, y: int, width: int = 100, height: int = 10, speed: int = 3):
+    def __init__(self, x: int, y: int, width: int = 100, height: int = 10, speed: int = 5):
         self.x = x
         self.y = y
         self.width = width
@@ -25,8 +25,7 @@ class Player:
 
     
     def update(self):
-        # update hitbox 
-        pass
+        self.hitbox.topleft  = (self.x, self.y)
 
     def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.color, self.hitbox)

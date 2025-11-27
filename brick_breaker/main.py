@@ -26,7 +26,11 @@ def check_input():
         if event.type == pygame.QUIT:
             running = False
 
+    keys = pygame.key.get_pressed()
+    player.handle_input(keys)
+
 def update():
+    player.update()
     ball.update()
 
 def render():
