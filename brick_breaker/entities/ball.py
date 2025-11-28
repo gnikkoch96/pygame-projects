@@ -1,5 +1,5 @@
 import pygame
-from config import SCREEN_HEIGHT, SCREEN_WIDTH
+from config import SCREEN_HEIGHT, SCREEN_WIDTH, DEBUG_MODE
 
 class Ball:
     def __init__(self, x: int, y: int, radius: int = 10, speed_x: int = 2, speed_y: int = 2):
@@ -28,5 +28,5 @@ class Ball:
     def render(self, screen: pygame.Surface):
         pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
-        # hitbox
-        pygame.draw.rect(screen, pygame.Color("#f90000"), self.hitbox, 1)
+        if DEBUG_MODE: 
+            pygame.draw.rect(screen, pygame.Color("#f90000"), self.hitbox, 1)   

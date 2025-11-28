@@ -1,6 +1,6 @@
 import pygame
 from typing import Sequence
-from config import SCREEN_WIDTH
+from config import SCREEN_WIDTH, DEBUG_MODE
 
 class Player:
     def __init__(self, x: int, y: int, width: int = 100, height: int = 10, speed: int = 5):
@@ -29,3 +29,6 @@ class Player:
 
     def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.color, self.hitbox)
+
+        if DEBUG_MODE: 
+            pygame.draw.rect(screen, pygame.Color("#f90000"), self.hitbox, 1)        
