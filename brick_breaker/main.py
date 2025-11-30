@@ -2,7 +2,7 @@ import pygame
 from utils.collision import handle_collision
 from entities.ball import Ball
 from entities.player import Player
-from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS
+from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS, DEBUG_MODE
 
 
 pygame.init()
@@ -29,6 +29,9 @@ def check_input():
 
     keys = pygame.key.get_pressed()
     player.handle_input(keys)
+
+    if DEBUG_MODE:
+        ball.handle_input()
 
 def update():
     handle_collision(ball, player, None)
