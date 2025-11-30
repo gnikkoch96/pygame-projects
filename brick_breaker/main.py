@@ -1,4 +1,5 @@
 import pygame
+from utils.collision import handle_collision
 from entities.ball import Ball
 from entities.player import Player
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS
@@ -30,6 +31,7 @@ def check_input():
     player.handle_input(keys)
 
 def update():
+    handle_collision(ball, player, None)
     player.update()
     ball.update()
 
