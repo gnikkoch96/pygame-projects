@@ -2,7 +2,7 @@ import pygame
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, DEBUG_MODE
 
 class Ball:
-    def __init__(self, x: int, y: int, radius: int = 10, speed_x: int = 2, speed_y: int = 2):
+    def __init__(self, x: int, y: int, radius: int = 10, speed_x: int = 5, speed_y: int = 5):
         self.x = x
         self.y = y
         self.radius = radius 
@@ -15,7 +15,6 @@ class Ball:
     def handle_input(self):
         self.x, self.y = pygame.mouse.get_pos()
         self.hitbox.center = (self.x, self.y)
-
 
     def update(self):
         if DEBUG_MODE: return

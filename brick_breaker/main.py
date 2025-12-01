@@ -17,8 +17,8 @@ clock: pygame.time.Clock = pygame.time.Clock()
 running: bool = True
 
 # game objs
-ball: Ball = Ball(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25)
+ball: Ball = Ball(50, 50)
+player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
 
 def check_input():
     global running
@@ -36,7 +36,9 @@ def check_input():
 def update():
     handle_collision(ball, player, None)
     player.update()
-    ball.update()
+
+    if not player.ball_attached:
+        ball.update()
 
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
