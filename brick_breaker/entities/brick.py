@@ -12,5 +12,5 @@ class Brick:
     def update(self):
         pass
 
-    def render(self):
-        pass
+    def render(self, screen: pygame.Surface):
+        pygame.draw.rect(screen, pygame.Color(self.color), self.hitbox))
