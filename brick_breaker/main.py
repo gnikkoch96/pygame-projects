@@ -2,6 +2,8 @@ import pygame
 from utils.collision import handle_collision
 from entities.ball import Ball
 from entities.player import Player
+from entities.brick import Brick
+from typing import List
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS, DEBUG_MODE
 
 
@@ -19,6 +21,7 @@ running: bool = True
 # game objs
 ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
+bricks: List[Brick] = []
 
 def check_input():
     global running
