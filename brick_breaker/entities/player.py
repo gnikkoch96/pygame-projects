@@ -28,6 +28,7 @@ class Player:
             if self.ball_attached:
                 self.ball_attached = False
 
+            # else speed up the ball (while space is being hold)
 
     
     def update(self):
