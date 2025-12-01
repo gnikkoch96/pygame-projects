@@ -17,7 +17,7 @@ clock: pygame.time.Clock = pygame.time.Clock()
 running: bool = True
 
 # game objs
-ball: Ball = Ball(50, 50)
+ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
 
 def check_input():
