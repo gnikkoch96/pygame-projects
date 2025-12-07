@@ -45,6 +45,10 @@ def update():
 
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
+
+    for brick in bricks:
+        brick.render(screen)
+
     player.render(screen)
     ball.render(screen)
     pygame.display.flip()

@@ -10,6 +10,7 @@ def generate_bricks(num_bricks: int, brick_width: int = 50, brick_height: int = 
     bricks: List[Brick] = []
     brick_spacing = 10
     top_margin = 50
+    left_margin = 15
 
     bricks_per_row = SCREEN_WIDTH // (brick_width + brick_spacing)
         
@@ -17,7 +18,7 @@ def generate_bricks(num_bricks: int, brick_width: int = 50, brick_height: int = 
         row = i // bricks_per_row
         col = i % bricks_per_row
 
-        x = col * (brick_width + brick_spacing)
+        x = left_margin + col * (brick_width + brick_spacing)
         y = top_margin + (row * (brick_height + brick_spacing))
 
         if x + brick_width > SCREEN_WIDTH:
