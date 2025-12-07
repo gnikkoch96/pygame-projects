@@ -1,6 +1,6 @@
 import pygame
 from utils.collision import handle_collision
-from utils.brick_generation import generate_bricks
+from utils.brick_generation import generate_bricks_by_row
 from entities.ball import Ball
 from entities.player import Player
 from entities.brick import Brick
@@ -21,7 +21,7 @@ running: bool = True
 # game objs
 ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
-bricks: List[Brick] = generate_bricks(60)
+bricks: List[Brick] = generate_bricks_by_row(5)
 
 def check_input():
     global running
