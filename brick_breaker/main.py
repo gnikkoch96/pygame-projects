@@ -21,7 +21,7 @@ running: bool = True
 # game objs
 ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
-bricks: List[Brick] = generate_bricks_by_row(5)
+bricks: List[Brick] = generate_bricks_by_row(6)
 
 def check_input():
     global running
@@ -37,8 +37,11 @@ def check_input():
         ball.handle_input()
 
 def update():
-    handle_collision(ball, player, None)
+    handle_collision(ball, player, bricks)
     player.update()
+
+    for brick in bricks:
+        brick.update()
 
     if not player.ball_attached:
         ball.update()

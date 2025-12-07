@@ -11,7 +11,12 @@ class Brick:
         self.hp = hp
 
     def update(self):
-        pass
+        if self.hp == 1:
+            self.color = "#ffffff"
+        elif self.hp == 2:
+            self.color = "#ba9d4f"
+        elif self.hp == 3: 
+            self.color = "#e15353"
 
     def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, pygame.Color(self.color), self.hitbox)

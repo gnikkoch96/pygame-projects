@@ -23,7 +23,7 @@ def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: i
                 continue # skip brick generation
 
             # create brick
-            brick = Brick(x, y, '#ffffff')
+            brick = Brick(x, y, '#ffffff', 3 - row % max_rows)
             bricks.append(brick)
 
     return bricks
