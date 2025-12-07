@@ -4,7 +4,7 @@ from config import SCREEN_WIDTH
 
 # return the brick list and their positions on the screen
 def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: int = 20) -> List[Brick]:
-    # control max limit on number of bricks to fit on screen
+    # control max limit of rows of bricks to fit on screen
     if max_rows >= 6: max_rows = 6
 
     bricks: List[Brick] = []
