@@ -13,7 +13,7 @@ def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: i
     left_margin = 15
 
     bricks_per_row = SCREEN_WIDTH // (brick_width + brick_spacing)
-    max_hp = max_rows // 2
+    max_hp = 3
 
     counter = 0
     for row in range(max_rows):
