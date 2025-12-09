@@ -2,6 +2,7 @@ from entities.ball import Ball
 from entities.player import Player
 from entities.brick import Brick
 from typing import List
+import random
 
 def handle_collision(ball: Ball, player: Player, bricks: List[Brick]):
     # ball -> paddle collision
@@ -22,6 +23,9 @@ def handle_collision(ball: Ball, player: Player, bricks: List[Brick]):
         if ball.hitbox.colliderect(brick.hitbox):
             # reverse ball
             ball.speed_y *= -1
+
+            # randomize left or right direction
+            ball.speed_x = random.choice([2, -2])
 
             # decrease brick hp
             brick.hp -= 1

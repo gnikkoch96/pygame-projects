@@ -27,7 +27,9 @@ class Player:
             # release the ball
             if self.ball_attached:
                 self.ball_attached = False
-                
+
+                # add ball speed
+                self.ball.speed_y = 10
             # else speed up the ball (while space is being hold)
 
     
