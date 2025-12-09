@@ -34,12 +34,17 @@ class Player:
             # else speed up the ball (while space is being hold)
 
     
+    def reset_ball(self):
+        self.ball.x = self.x + self.width // 2
+        self.ball.y = self.y - self.ball.radius
+        self.ball.speed_x = 0
+        self.ball.speed_y = 0
+
     def update(self):
         self.hitbox.topleft  = (self.x, self.y)
 
         if self.ball and self.ball_attached:
-            self.ball.x = self.x + self.width // 2
-            self.ball.y = self.y - self.ball.radius
+            self.reset_ball()
 
         if self.ball.y + self.ball.radius >= SCREEN_HEIGHT:
             if self.lives > 0:
