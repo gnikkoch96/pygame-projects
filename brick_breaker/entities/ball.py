@@ -2,7 +2,7 @@ import pygame
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, DEBUG_MODE
 
 class Ball:
-    def __init__(self, x: int, y: int, speed_x: int = 5, speed_y: int = 5, radius: int = 10):
+    def __init__(self, x: int, y: int, speed_x: int = 0, speed_y: int = 0, radius: int = 10):
         self.x = x
         self.y = y
         self.radius = radius 

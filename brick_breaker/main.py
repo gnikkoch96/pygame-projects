@@ -19,7 +19,7 @@ clock: pygame.time.Clock = pygame.time.Clock()
 running: bool = True
 
 # game objs
-ball: Ball = Ball(0, 0, )
+ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
 bricks: List[Brick] = generate_bricks_by_row(3)
 
