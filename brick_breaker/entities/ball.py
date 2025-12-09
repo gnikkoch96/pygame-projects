@@ -24,7 +24,7 @@ class Ball:
             self.speed_x *= -1 
 
         # bounce y-axis
-        if self.y + self.radius >= SCREEN_HEIGHT or self.y - self.radius < 0:
+        if self.y - self.radius < 0:
             self.speed_y *= -1 
     
         self.x += self.speed_x
