@@ -1,7 +1,7 @@
 import pygame
 from entities.ball import Ball
 from typing import Sequence
-from config import SCREEN_WIDTH, DEBUG_MODE
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, DEBUG_MODE
 
 class Player:
     def __init__(self, x: int, y: int, ball: Ball, width: int = 100, height: int = 10, speed: int = 5, lives: int = 3):
@@ -40,6 +40,18 @@ class Player:
         if self.ball and self.ball_attached:
             self.ball.x = self.x + self.width // 2
             self.ball.y = self.y - self.ball.radius
+
+        if self.ball.y + self.ball.radius >= SCREEN_HEIGHT:
+            if self.lives > 0:
+                # reset ball pos
+                self.ball_attached = True
+
+                # lose a life
+                self.lives -= 1
+            else: 
+                # game over
+                pass
+
 
     def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.color, self.hitbox)
