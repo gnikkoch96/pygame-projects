@@ -4,7 +4,7 @@ from typing import Sequence
 from config import SCREEN_WIDTH, DEBUG_MODE
 
 class Player:
-    def __init__(self, x: int, y: int, ball: Ball, width: int = 100, height: int = 10, speed: int = 5):
+    def __init__(self, x: int, y: int, ball: Ball, width: int = 100, height: int = 10, speed: int = 5, lives: int = 3):
         self.x = x
         self.y = y
         self.width = width
@@ -14,6 +14,7 @@ class Player:
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
         self.ball = ball
         self.ball_attached = True
+        self.lives = lives
 
     def handle_input(self, keys: Sequence[bool]):
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x >= 0:
