@@ -20,6 +20,9 @@ clock: pygame.time.Clock = pygame.time.Clock()
 running: bool = True
 game_state: GameState = GameState()
 
+# ui objs
+hud_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+
 # game objs
 ball: Ball = Ball(0, 0)
 player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
@@ -48,6 +51,10 @@ def update():
     if not player.ball_attached:
         ball.update()
 
+def render_hud():
+    score_label = hud_font.render(f"Score: {game_state.score}", True, pygame.Color("#ffffff"))
+    screen.blit(score_label, (10, 10))
+
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
 
@@ -56,6 +63,8 @@ def render():
 
     player.render(screen)
     ball.render(screen)
+    render_hud()
+
     pygame.display.flip()
 
 while running:
