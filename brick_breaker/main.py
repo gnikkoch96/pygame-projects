@@ -17,6 +17,7 @@ clock: pygame.time.Clock = pygame.time.Clock()
 
 # game logic
 running: bool = True
+score: int = 0
 
 # game objs
 ball: Ball = Ball(0, 0)
