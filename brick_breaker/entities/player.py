@@ -36,7 +36,7 @@ class Player:
     
     def reset_ball(self):
         self.ball.x = self.x + self.width // 2
-        self.ball.y = self.y - self.ball.radius
+        self.ball.y = self.y - self.ball.radius - 3
         self.ball.speed_x = 0
         self.ball.speed_y = 0
 
