@@ -1,6 +1,7 @@
 import pygame
 from utils.collision import handle_collision
 from utils.brick_generation import generate_bricks_by_row
+from utils.game_state import GameState
 from entities.ball import Ball
 from entities.player import Player
 from entities.brick import Brick
@@ -17,7 +18,7 @@ clock: pygame.time.Clock = pygame.time.Clock()
 
 # game logic
 running: bool = True
-score: int = 0
+game_state: GameState = GameState()
 
 # game objs
 ball: Ball = Ball(0, 0)
@@ -38,7 +39,7 @@ def check_input():
         ball.handle_input()
 
 def update():
-    handle_collision(ball, player, bricks)
+    handle_collision(game_state, ball, player, bricks)
     player.update()
 
     for brick in bricks:

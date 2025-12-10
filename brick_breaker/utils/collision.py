@@ -2,9 +2,10 @@ from entities.ball import Ball
 from entities.player import Player
 from entities.brick import Brick
 from typing import List
+from utils.game_state import GameState
 import random
 
-def handle_collision(ball: Ball, player: Player, bricks: List[Brick]):
+def handle_collision(game_state: GameState, ball: Ball, player: Player, bricks: List[Brick]):
     # ball -> paddle collision
     if ball.hitbox.colliderect(player.hitbox):
         # determine which part of the player the ball collided with
@@ -32,6 +33,9 @@ def handle_collision(ball: Ball, player: Player, bricks: List[Brick]):
             if brick.hp <= 0:
                 # remove from bricks
                 bricks.remove(brick)
+
+            # update score
+            game_state.score += 100
 
             
 
