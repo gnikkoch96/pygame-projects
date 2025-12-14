@@ -19,12 +19,13 @@ class Player:
     def handle_input(self, keys: Sequence[bool], mouse_pos: Sequence[bool], mouse_pressed: Sequence[bool]):
         # mouse controls
         self.x = mouse_pos[0] - self.width//2
+        self.x = max(0, min(SCREEN_WIDTH - self.width, self.x))
         
-        if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x >= 0:
-            self.x -= self.speed
+        # if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x >= 0:
+        #     self.x -= self.speed
 
-        if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.x + self.width <= SCREEN_WIDTH:
-            self.x += self.speed
+        # if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.x + self.width <= SCREEN_WIDTH:
+        #     self.x += self.speed
 
         # let go of ball and/or speed up ball 
         if keys[pygame.K_SPACE]:
