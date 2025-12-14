@@ -36,7 +36,9 @@ def check_input():
             running = False
 
     keys = pygame.key.get_pressed()
-    player.handle_input(keys)
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pressed = pygame.mouse.get_pressed()
+    player.handle_input(keys, mouse_pos, mouse_pressed)
 
     if DEBUG_MODE:
         ball.handle_input()

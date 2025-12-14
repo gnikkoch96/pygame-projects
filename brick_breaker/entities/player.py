@@ -16,7 +16,10 @@ class Player:
         self.ball_attached = True
         self.lives = lives
 
-    def handle_input(self, keys: Sequence[bool]):
+    def handle_input(self, keys: Sequence[bool], mouse_pos: Sequence[bool], mouse_pressed: Sequence[bool]):
+        # mouse controls
+        self.x = mouse_pos[0] - self.width//2
+        
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x >= 0:
             self.x -= self.speed
 
