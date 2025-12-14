@@ -28,7 +28,7 @@ class Player:
         #     self.x += self.speed
 
         # let go of ball and/or speed up ball 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] or mouse_pressed[0]:
             # release the ball
             if self.ball_attached:
                 self.ball_attached = False
