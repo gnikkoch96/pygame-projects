@@ -37,6 +37,7 @@ def handle_collision(game_state: GameState, ball: Ball, player: Player, bricks: 
             # update score
             game_state.score += 100
 
+
             
 
             
