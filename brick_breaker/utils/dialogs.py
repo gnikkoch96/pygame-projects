@@ -20,7 +20,7 @@ def show_dialog(screen: pygame.Surface, font: pygame.font, button_font: pygame.f
     # border color
     pygame.draw.rect(screen, pygame.Color('#000000'), (dialog_x, dialog_y, dialog_width, dialog_height), 2)
 
-    message = f"Your Final Score: {score}"
+    message = f"Your Final Score:"
     text = font.render(message, True, pygame.Color("#D7A6A6"))
     text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     screen.blit(text, text_rect)

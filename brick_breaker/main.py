@@ -22,6 +22,8 @@ game_state: GameState = GameState()
 
 # ui objs
 hud_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+dialog_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
+button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 
 # game objs
 ball: Ball = Ball(0, 0)
@@ -63,7 +65,7 @@ def render():
     for brick in bricks:
         brick.render(screen)
 
-    player.render(screen)
+    player.render(screen, dialog_font, button_font)
     ball.render(screen)
     render_hud()
 
