@@ -1,9 +1,12 @@
+from __future__ import annotations
 import pygame
 from entities.ball import Ball
-from typing import Sequence
+from typing import Sequence, TYPE_CHECKING
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, DEBUG_MODE
 from utils.dialogs import show_dialog
-from utils.game_state import GameState
+
+if TYPE_CHECKING:
+    from utils.game_state import GameState
 
 class Player:
     def __init__(self, x: int, y: int, ball: Ball, width: int = 100, height: int = 10, speed: int = 5, lives: int = 3):

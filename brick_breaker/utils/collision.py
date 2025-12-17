@@ -1,38 +1,34 @@
-from entities.ball import Ball
-from entities.player import Player
-from entities.brick import Brick
-from typing import List
 from utils.game_state import GameState
 import random
 
-def handle_collision(game_state: GameState, ball: Ball, player: Player, bricks: List[Brick]):
+def handle_collision(game_state: GameState):
     # ball -> paddle collision
-    if ball.hitbox.colliderect(player.hitbox):
+    if game_state.ball.hitbox.colliderect(game_state.player.hitbox):
         # determine which part of the player the ball collided with
-        if ball.hitbox.x - ball.radius  < player.hitbox.x + player.hitbox.width // 3:
+        if game_state.ball.hitbox.x - game_state.ball.radius  < game_state.player.hitbox.x + game_state.player.hitbox.width // 3:
             # left
-            ball.speed_x = -abs(ball.speed_x)
-        elif ball.hitbox.x + ball.radius > player.hitbox.x + (2 * player.hitbox.width // 3):
+            game_state.ball.speed_x = -abs(game_state.ball.speed_x)
+        elif game_state.ball.hitbox.x + game_state.ball.radius > game_state.player.hitbox.x + (2 * game_state.player.hitbox.width // 3):
             # right
-            ball.speed_x = abs(ball.speed_x)
+            game_state.ball.speed_x = abs(game_state.ball.speed_x)
 
         # reverse ball direction 
-        ball.speed_y *= -1
+        game_state.ball.speed_y *= -1
 
     # ball -> brick collision
-    for brick in bricks:
-        if ball.hitbox.colliderect(brick.hitbox):
+    for brick in game_state.bricks:
+        if game_state.ball.hitbox.colliderect(brick.hitbox):
             # reverse ball
-            ball.speed_y *= -1
+            game_state.ball.speed_y *= -1
 
             # randomize left or right direction
-            ball.speed_x = random.choice([2, -2])
+            game_state.ball.speed_x = random.choice([2, -2])
 
             # decrease brick hp
             brick.hp -= 1
             if brick.hp <= 0:
                 # remove from bricks
-                bricks.remove(brick)
+                game_state.bricks.remove(brick)
 
             # update score
             game_state.score += 100

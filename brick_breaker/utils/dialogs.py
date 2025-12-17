@@ -1,10 +1,12 @@
+from __future__ import annotations
 import pygame
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
-from utils.game_state import GameState
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from utils.game_state import GameState
 
 def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font, button_font: pygame.font, is_game_over: bool = False, is_next_level: bool = False):
-    global game_finished, running
-
     overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     overlay.set_alpha(128)
     overlay.fill((0, 0, 0))
@@ -82,10 +84,10 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
 
                 # clicked on retry button
                 if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
-                    # reset game_state
-                    game_finished = False
-                    waiting = False # close dialog
-            
+                    # reset game state
+                    game_state.reset()
+                    waiting = False    
+
                 # clicked on exit button
                 elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
                     waiting = False
