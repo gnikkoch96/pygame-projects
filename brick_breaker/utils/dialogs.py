@@ -36,7 +36,6 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
     # buttons
     button_width, button_height = 100, 50
 
-    
     if is_next_level:
         next_level_x = dialog_x + (dialog_width - button_width) // 2 - 75
         next_level_y = dialog_y + dialog_height - button_height - 20
@@ -83,11 +82,11 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
 
                 # clicked on retry button
                 if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
-                    score = 0
+                    # reset game_state
                     game_finished = False
                     waiting = False # close dialog
             
                 # clicked on exit button
                 elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
                     waiting = False
-                    running = False
+                    game_state.running = False

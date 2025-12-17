@@ -17,7 +17,6 @@ pygame.display.set_caption('Brick Breaker')
 clock: pygame.time.Clock = pygame.time.Clock()
 
 # game logic
-running: bool = True
 game_state: GameState = GameState()
 
 # ui objs
@@ -31,11 +30,9 @@ player: Player = Player(SCREEN_WIDTH //2, SCREEN_HEIGHT - 25, ball)
 bricks: List[Brick] = generate_bricks_by_row(3)
 
 def check_input():
-    global running
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            game_state.running = False
 
     keys = pygame.key.get_pressed()
     mouse_pos = pygame.mouse.get_pos()
@@ -71,7 +68,7 @@ def render():
 
     pygame.display.flip()
 
-while running:
+while game_state.running:
     check_input()
     update()
     render()
