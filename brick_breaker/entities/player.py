@@ -3,6 +3,7 @@ from entities.ball import Ball
 from typing import Sequence
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, DEBUG_MODE
 from utils.dialogs import show_dialog
+from utils.game_state import GameState
 
 class Player:
     def __init__(self, x: int, y: int, ball: Ball, width: int = 100, height: int = 10, speed: int = 5, lives: int = 3):
@@ -60,11 +61,11 @@ class Player:
                 self.lives -= 1
 
 
-    def render(self, screen: pygame.Surface, font: pygame.font, button_font: pygame.font):
+    def render(self, screen: pygame.Surface, game_state: GameState, font: pygame.font, button_font: pygame.font):
         pygame.draw.rect(screen, self.color, self.hitbox)
 
         if DEBUG_MODE: 
             pygame.draw.rect(screen, pygame.Color("#f90000"), self.hitbox, 1)     
 
         if self.lives <= 0:
-            show_dialog(screen, font, button_font, True)   
+            show_dialog(screen, game_state, font, button_font, True)   

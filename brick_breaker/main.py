@@ -65,7 +65,7 @@ def render():
     for brick in bricks:
         brick.render(screen)
 
-    player.render(screen, dialog_font, button_font)
+    player.render(screen, game_state, dialog_font, button_font)
     ball.render(screen)
     render_hud()
 

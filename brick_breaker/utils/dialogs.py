@@ -1,8 +1,9 @@
 import pygame
 from config import SCREEN_HEIGHT, SCREEN_WIDTH
+from utils.game_state import GameState
 
-def show_dialog(screen: pygame.Surface, font: pygame.font, button_font: pygame.font, is_game_over: bool = False, is_next_level: bool = False):
-    global score, game_finished, running
+def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font, button_font: pygame.font, is_game_over: bool = False, is_next_level: bool = False):
+    global game_finished, running
 
     overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
     overlay.set_alpha(128)
@@ -20,8 +21,9 @@ def show_dialog(screen: pygame.Surface, font: pygame.font, button_font: pygame.f
     # border color
     pygame.draw.rect(screen, pygame.Color('#000000'), (dialog_x, dialog_y, dialog_width, dialog_height), 2)
 
-    message = f"Your Final Score:"
-    text = font.render(message, True, pygame.Color("#D7A6A6"))
+    
+    score_message = f"Your Final Score: {game_state.score}"
+    text = font.render(score_message, True, pygame.Color("#D7A6A6"))
     text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     screen.blit(text, text_rect)
 
