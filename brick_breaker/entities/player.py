@@ -21,7 +21,7 @@ class Player:
         self.ball_attached = True
         self.lives = lives
 
-    def handle_input(self, keys: Sequence[bool], mouse_pos: Sequence[bool], mouse_pressed: Sequence[bool]):
+    def handle_input(self, keys: Sequence[bool], mouse_pos: Sequence[bool], left_mouse_clicked: bool):
         # mouse controls
         self.x = mouse_pos[0] - self.width//2
         self.x = max(0, min(SCREEN_WIDTH - self.width, self.x))
@@ -33,7 +33,7 @@ class Player:
         #     self.x += self.speed
 
         # let go of ball and/or speed up ball 
-        if keys[pygame.K_SPACE] or mouse_pressed[0]:
+        if keys[pygame.K_SPACE] or left_mouse_clicked:
             # release the ball
             if self.ball_attached:
                 self.ball_attached = False

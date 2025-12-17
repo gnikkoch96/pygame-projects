@@ -20,14 +20,21 @@ dialog_font: pygame.font.SysFont = pygame.font.SysFont(None, 48)
 button_font: pygame.font.SysFont = pygame.font.SysFont(None, 24)
 
 def check_input():
+    if not game_state.running: return
+
+    left_mouse_clicked = False
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_state.running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                left_mouse_clicked = True
 
     keys = pygame.key.get_pressed()
     mouse_pos = pygame.mouse.get_pos()
-    mouse_pressed = pygame.mouse.get_pressed()
-    game_state.player.handle_input(keys, mouse_pos, mouse_pressed)
+    # mouse_pressed = pygame.mouse.get_pressed() # this is for listening for mouse hold
+    game_state.player.handle_input(keys, mouse_pos, left_mouse_clicked)
 
     if DEBUG_MODE:
         game_state.ball.handle_input()

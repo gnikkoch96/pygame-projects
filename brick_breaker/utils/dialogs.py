@@ -86,7 +86,6 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
                 if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
                     # reset game state
                     game_state.reset()
-
                     waiting = False    
 
                 # clicked on exit button
