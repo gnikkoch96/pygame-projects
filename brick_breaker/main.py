@@ -1,5 +1,6 @@
 import pygame
 from utils.collision import handle_collision
+from utils.dialogs import show_dialog
 from utils.game_state import GameState
 from config import SCREEN_HEIGHT, SCREEN_WIDTH, BACKGROUND_COLOR, FPS, DEBUG_MODE
 
@@ -64,6 +65,9 @@ def render():
     render_hud()
 
     pygame.display.flip()
+
+    if len(game_state.bricks) <= 0:
+        show_dialog(screen, game_state, dialog_font, button_font, False, True)
 
 while game_state.running:
     check_input()

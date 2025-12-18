@@ -22,3 +22,7 @@ class GameState:
         self.player.lives = 3
      
         self.bricks: List[Brick] = generate_bricks_by_row(self.level)
+
+    def next_level(self):
+        self.level += 1
+        self.reset()

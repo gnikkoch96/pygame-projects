@@ -46,7 +46,7 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
 
 
         button_text = button_font.render("Next Level", True, pygame.Color('#ffffff'))
-        button_text_rect = button_text.get_rect(center=(retry_button_x + button_width // 2, retry_button_y + button_height // 2))
+        button_text_rect = button_text.get_rect(center=(next_level_x + button_width // 2, next_level_y + button_height // 2))
         screen.blit(button_text, button_text_rect)
 
     elif is_game_over:
@@ -83,12 +83,19 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
                 mouse_x, mouse_y = pygame.mouse.get_pos()
 
                 # clicked on retry button
-                if mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
+                if is_game_over and mouse_x >= retry_button_x and mouse_x <= (retry_button_x + button_width) and mouse_y >= retry_button_y and mouse_y <= (retry_button_y + button_height):
                     # reset game state
                     game_state.reset()
                     waiting = False    
 
+                if is_next_level and mouse_x >= next_level_x and mouse_x <= (next_level_x + button_width) and mouse_y >= next_level_y and mouse_y <= (next_level_y + button_height):
+                    # next level
+                    game_state.next_level()
+                    waiting = False
+
                 # clicked on exit button
-                elif mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
+                if mouse_x >= exit_button_x and mouse_x <= (exit_button_x + button_width) and mouse_y >= exit_button_y and mouse_y <= (exit_button_y + button_height):
                     waiting = False
                     game_state.running = False
+
+                
