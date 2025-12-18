@@ -54,6 +54,8 @@ def render_hud():
     score_label = hud_font.render(f"Score: {game_state.score}", True, pygame.Color("#ffffff"))
     screen.blit(score_label, (10, 10))
 
+    lives_label = hud_font.render(f"Lives: {game_state.player.lives}", True, pygame.Color("#ffffff"))
+    screen.blit(lives_label, (SCREEN_WIDTH - 140, 10))
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
 
