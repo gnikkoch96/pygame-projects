@@ -30,10 +30,16 @@ def show_dialog(screen: pygame.Surface, game_state: GameState, font: pygame.font
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
         screen.blit(text, text_rect)
 
-        score_message = f"Your Final Score: {game_state.score}"
-        text = font.render(score_message, True, pygame.Color("#000000"))
-        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    if is_next_level:
+        next_level_message = "Win!"
+        text = font.render(next_level_message, True, pygame.Color("#000000"))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
         screen.blit(text, text_rect)
+
+    score_message = f"Your Score: {game_state.score}"
+    text = font.render(score_message, True, pygame.Color("#000000"))
+    text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    screen.blit(text, text_rect)
 
     # buttons
     button_width, button_height = 100, 50
