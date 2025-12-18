@@ -50,12 +50,21 @@ def update():
     if not game_state.player.ball_attached:
         game_state.ball.update()
 
+    for text_anim in game_state.text_animations[:]:
+        text_anim['timer'] -= 1
+        text_anim['alpha'] = max(0, int(255 * (text_anim['timer'] / 180)))
+        text_anim['y'] -= 1 
+
+        if text_anim['timer'] <= 0:
+            game_state.text_animations.remove(text_anim)
+
 def render_hud():
     score_label = hud_font.render(f"Score: {game_state.score}", True, pygame.Color("#ffffff"))
     screen.blit(score_label, (10, 10))
 
     lives_label = hud_font.render(f"Lives: {game_state.player.lives}", True, pygame.Color("#ffffff"))
     screen.blit(lives_label, (SCREEN_WIDTH - 140, 10))
+
 def render():
     screen.fill(pygame.Color(BACKGROUND_COLOR))
 
@@ -65,6 +74,11 @@ def render():
     game_state.player.render(screen, game_state, dialog_font, button_font)
     game_state.ball.render(screen)
     render_hud()
+
+    for anim in game_state.text_animations:
+        text_surf = button_font.render(anim['text'], True, pygame.Color(anim['text_color']))
+        text_surf.set_alpha(anim['alpha'])
+        screen.blit(text_surf, (anim['x'], anim['y']))
 
     pygame.display.flip()
 

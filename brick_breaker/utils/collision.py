@@ -33,6 +33,16 @@ def handle_collision(game_state: GameState):
             # update score
             game_state.score += 100
 
+            # add animation earned
+            game_state.text_animations.append({
+                'text': f"+{100}",
+                'x': brick.x,
+                'y': brick.y,
+                'alpha': 255,
+                'text_color': "#ffffff",
+                'timer': 180 # 3 seconds at 60FPS
+            })
+
 
             
 
