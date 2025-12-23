@@ -1,5 +1,6 @@
 from utils.game_state import GameState
 import random
+import math  # Add this import at the top if not present
 
 def handle_collision(game_state: GameState):
     # ball -> paddle collision
@@ -18,12 +19,23 @@ def handle_collision(game_state: GameState):
     # ball -> brick collision
     for brick in game_state.bricks:
         if game_state.ball.hitbox.colliderect(brick.hitbox):
-            # reverse ball
-            game_state.ball.speed_y *= -1
+            # Calculate current speed (magnitude) and angle
+            speed = math.hypot(game_state.ball.speed_x, game_state.ball.speed_y)
+            current_angle = math.atan2(game_state.ball.speed_y, game_state.ball.speed_x)
+            
+            # Reflect angle over horizontal (bounce off top)
+            reflected_angle = -current_angle
+            
+            # Add small random variation to angle (e.g., ±30 degrees)
+            angle_variation = random.uniform(-math.pi/6, math.pi/6)
+            new_angle = reflected_angle + angle_variation
+            
+            # print(f"Old Angle: {math.degrees(current_angle):.2f}, Reflected Angle: {math.degrees(reflected_angle):.2f}, New Angle: {math.degrees(new_angle):.2f}")
 
-            # randomize left or right direction
-            game_state.ball.speed_x = random.choice([2, -2])
-
+            # Set new velocities based on speed and new angle
+            game_state.ball.speed_x = speed * math.cos(new_angle)
+            game_state.ball.speed_y = speed * math.sin(new_angle)
+            
             # decrease brick hp
             brick.hp -= 1
             if brick.hp <= 0:
@@ -44,6 +56,6 @@ def handle_collision(game_state: GameState):
             })
 
 
-            
 
-            
+
+
