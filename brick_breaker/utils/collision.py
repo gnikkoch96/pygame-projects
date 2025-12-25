@@ -5,16 +5,31 @@ import math  # Add this import at the top if not present
 def handle_collision(game_state: GameState):
     # ball -> paddle collision
     if game_state.ball.hitbox.colliderect(game_state.player.hitbox):
-        # determine which part of the player the ball collided with
-        if game_state.ball.hitbox.x - game_state.ball.radius  < game_state.player.hitbox.x + game_state.player.hitbox.width // 3:
-            # left
-            game_state.ball.speed_x = -abs(game_state.ball.speed_x)
-        elif game_state.ball.hitbox.x + game_state.ball.radius > game_state.player.hitbox.x + (2 * game_state.player.hitbox.width // 3):
-            # right
-            game_state.ball.speed_x = abs(game_state.ball.speed_x)
+        speed = math.hypot(game_state.ball.speed_x, game_state.ball.speed_y)
+        current_angle = math.atan2(game_state.ball.speed_y, game_state.ball.speed_x)
+        reflected_angle = -current_angle
+        new_angle = reflected_angle # dummy value
 
-        # reverse ball direction 
-        game_state.ball.speed_y *= -1
+        # determine which part of the player the ball collided with
+        left_paddle_side = game_state.player.hitbox.x + game_state.player.hitbox.width // 3
+        middle_paddle_side = game_state.player.hitbox.x + (2 * game_state.player.hitbox.width) // 3
+
+        if game_state.ball.hitbox.x < left_paddle_side:
+            # go left
+            print("left")
+            new_angle = math.pi/6
+        elif game_state.ball.hitbox.x + game_state.ball.radius > middle_paddle_side:
+            # go right
+            print("right")
+            new_angle = -math.pi/6
+        else: 
+            # go up
+            print("up")
+            new_angle = -math.pi/2
+            pass
+
+        game_state.ball.speed_x = speed * math.cos(new_angle)
+        game_state.ball.speed_y = speed * math.sin(new_angle)
 
     # ball -> brick collision
     for brick in game_state.bricks:
