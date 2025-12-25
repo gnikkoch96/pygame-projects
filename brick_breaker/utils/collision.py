@@ -16,15 +16,12 @@ def handle_collision(game_state: GameState):
 
         if game_state.ball.hitbox.x < left_paddle_side:
             # go left
-            print("left")
             new_angle = math.pi/6
         elif game_state.ball.hitbox.x + game_state.ball.radius > middle_paddle_side:
             # go right
-            print("right")
             new_angle = -math.pi/6
         else: 
             # go up
-            print("up")
             new_angle = -math.pi/2
             pass
 
