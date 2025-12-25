@@ -23,8 +23,8 @@ class Player:
 
     def handle_input(self, keys: Sequence[bool], mouse_pos: Sequence[bool], left_mouse_clicked: bool):
         # mouse controls
-        # self.x = mouse_pos[0] - self.width//2
-        # self.x = max(0, min(SCREEN_WIDTH - self.width, self.x))
+        self.x = mouse_pos[0] - self.width//2
+        self.x = max(0, min(SCREEN_WIDTH - self.width, self.x))
         
         # if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x >= 0:
         #     self.x -= self.speed
