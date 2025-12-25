@@ -16,10 +16,10 @@ def handle_collision(game_state: GameState):
 
         if game_state.ball.hitbox.x < left_paddle_side:
             # go left
-            new_angle = math.pi/6
+            new_angle = random.uniform(7 * math.pi/6, 4 * math.pi/3)
         elif game_state.ball.hitbox.x + game_state.ball.radius > middle_paddle_side:
             # go right
-            new_angle = -math.pi/6
+            new_angle = random.uniform(11 * math.pi/6, 5 * math.pi/3)
         else: 
             # go up
             new_angle = -math.pi/2
@@ -27,6 +27,7 @@ def handle_collision(game_state: GameState):
 
         game_state.ball.speed_x = speed * math.cos(new_angle)
         game_state.ball.speed_y = speed * math.sin(new_angle)
+        print(f"game_state.ball.speed_x: {game_state.ball.speed_x}, game_state.ball.speed_y: {game_state.ball.speed_y}")
 
     # ball -> brick collision
     for brick in game_state.bricks:
