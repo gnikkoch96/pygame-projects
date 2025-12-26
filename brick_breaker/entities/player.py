@@ -64,7 +64,7 @@ class Player:
                 self.lives -= 1
 
 
-    def render(self, screen: pygame.Surface, game_state: GameState, font: pygame.font, button_font: pygame.font):
+    def render(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.color, self.hitbox)
 
         if DEBUG_MODE: 
