@@ -71,7 +71,7 @@ def render():
     for brick in game_state.bricks:
         brick.render(screen)
 
-    game_state.player.render(screen, game_state, dialog_font, button_font)
+    game_state.player.render(screen)
     game_state.ball.render(screen)
     render_hud()
 
@@ -84,6 +84,7 @@ def render():
 
     if game_state.player.lives <= 0:
         show_dialog(screen, game_state, dialog_font, button_font, True)
+        
     if len(game_state.bricks) <= 12:
         show_dialog(screen, game_state, dialog_font, button_font, False, True)
 

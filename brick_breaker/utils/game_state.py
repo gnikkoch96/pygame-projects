@@ -18,6 +18,7 @@ class GameState:
     def reset(self):
         self.score = 0
         self.running = True
+        self.player.ball_attached = True
         self.player.reset_ball()
         self.player.lives = 3
         self.bricks: List[Brick] = generate_bricks_by_row(self.level)

@@ -27,7 +27,6 @@ def handle_collision(game_state: GameState):
 
         game_state.ball.speed_x = speed * math.cos(new_angle)
         game_state.ball.speed_y = speed * math.sin(new_angle)
-        print(f"game_state.ball.speed_x: {game_state.ball.speed_x}, game_state.ball.speed_y: {game_state.ball.speed_y}")
 
     # ball -> brick collision
     for brick in game_state.bricks:
