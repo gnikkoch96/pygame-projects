@@ -82,7 +82,9 @@ def render():
 
     pygame.display.flip()
 
-    if len(game_state.bricks) <= 0:
+    if game_state.player.lives <= 0:
+        show_dialog(screen, game_state, dialog_font, button_font, True)
+    if len(game_state.bricks) <= 12:
         show_dialog(screen, game_state, dialog_font, button_font, False, True)
 
 while game_state.running:

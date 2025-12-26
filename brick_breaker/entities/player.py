@@ -69,6 +69,3 @@ class Player:
 
         if DEBUG_MODE: 
             pygame.draw.rect(screen, pygame.Color("#f90000"), self.hitbox, 1)     
-
-        if self.lives <= 0:
-            show_dialog(screen, game_state, font, button_font, True)   
