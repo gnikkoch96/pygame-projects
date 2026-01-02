@@ -19,7 +19,7 @@ def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: i
     # --- bottom-up colors for your rules ---
     white_rows  = ceil(max_rows / 3)
     orange_rows = ceil((max_rows - 1) / 3)
-    red_rows    = max_rows // 3
+    red_rows    = ceil((max_rows - 2) / 3)
 
     colors_bottom_up = (
         ["white"] * white_rows +
