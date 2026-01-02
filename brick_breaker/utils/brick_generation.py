@@ -16,15 +16,15 @@ def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: i
 
     bricks_per_row = SCREEN_WIDTH // (brick_width + brick_spacing)
 
-    # --- bottom-up colors for your rules ---
-    white_rows  = ceil(max_rows / 3)
-    orange_rows = ceil((max_rows - 1) / 3)
-    red_rows    = ceil((max_rows - 2) / 3)
+    # calculate the number of rows 
+    one_hp_rows  = ceil(max_rows / 3)
+    two_hp_rows = ceil((max_rows - 1) / 3)
+    three_hp_rows    = ceil((max_rows - 2) / 3)
 
     colors_bottom_up = (
-        ["white"] * white_rows +
-        ["orange"] * orange_rows +
-        ["red"] * red_rows
+        ["white"] * one_hp_rows +
+        ["orange"] * two_hp_rows +
+        ["red"] * three_hp_rows
     )
 
     # screen draws rows top->bottom, so flip to keep "white on bottom"
@@ -44,7 +44,7 @@ def generate_bricks_by_row(max_rows: int, brick_width: int = 50, brick_height: i
         y = top_margin + row * (brick_height + brick_spacing)
         for col in range(bricks_per_row):
             x = start_x + col * (brick_width + brick_spacing)
-            bricks.append(Brick(x, y, color, hp, brick_width, brick_height))
+            bricks.append(Brick(x, y, hp, brick_width, brick_height))
 
     return bricks
 
